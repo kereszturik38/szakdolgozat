@@ -5,7 +5,8 @@ include "inc/db.php";
 
 $page = 'index';
 
-echo "<h1>Hello</h1>";
-
 include "inc/htmlheader.php";
+include "inc/htmlnav.php";
+include "inc/footer.php";
 ?>
+
