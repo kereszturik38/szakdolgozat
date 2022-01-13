@@ -17,13 +17,16 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-person-fill em-1"></i>
-                            User
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
+                    <span class="d-flex">
+                        
+                            
+                            <?php
+                            
+                            if(isset($_SESSION["loggedIn"])) echo "<i class='bi-person-fill em-1'></i>" . $_SESSION["loggedIn"]; 
+                            
+                            ?>
+                            
+                    </span>
                 </div>
             </div>
         </nav>
