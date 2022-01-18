@@ -5,8 +5,21 @@ include "inc/db.php";
 
 $page = 'index';
 
+$menupontok = array(    'index' => "Home", 
+                        'upload' => "Upload",
+                        'settings' => "Settings"
+                );
+
+$title = $menupontok[$page];
+
+
+
 include "inc/htmlheader.php";
+
 include "inc/htmlnav.php";
+include "controller/" . $page . "_controller.php";
+
+
 include "inc/footer.php";
 ?>
 
