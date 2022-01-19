@@ -11,7 +11,10 @@
                 <div class="card-body p-4">
                     <div class="text-center">
                         <!-- Product name-->
-                        <h5 class="fw-bolder"><?php echo $p->get_title(); ?></h5>
+                        <h5 class="fw-bolder text-truncate"><?php echo $p->get_title(); ?></h5>
+                        <h6 class="fw-light"><?php echo $p->get_uid(); ?></h6>
+                        <i class="bi-card-text em-1"></i><?php echo $p->get_comment_count(); ?>
+                        <i class="bi-bookmark em-1"></i><?php echo $p->get_bookmark_count(); ?>
                     </div>
                 </div>
                 <!-- Product actions-->

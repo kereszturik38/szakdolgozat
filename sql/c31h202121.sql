@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Jan 13. 11:13
+-- Létrehozás ideje: 2022. Jan 19. 13:21
 -- Kiszolgáló verziója: 10.4.14-MariaDB
 -- PHP verzió: 7.4.10
 
@@ -54,7 +54,8 @@ CREATE TABLE `comment` (
   `uid` int(255) NOT NULL,
   `post_id` int(255) NOT NULL,
   `text` text COLLATE utf8_hungarian_ci NOT NULL,
-  `time_commented` int(11) NOT NULL
+  `time_commented` int(11) NOT NULL,
+  `parent` int(255) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -67,13 +68,19 @@ CREATE TABLE `post` (
   `post_id` int(255) NOT NULL,
   `uid` int(255) NOT NULL,
   `title` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
-  `like_count` int(255) NOT NULL,
   `bookmark_count` int(255) NOT NULL,
   `comment_count` int(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `visible` tinyint(1) NOT NULL,
   `type` varchar(15) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `post`
+--
+
+INSERT INTO `post` (`post_id`, `uid`, `title`, `bookmark_count`, `comment_count`, `timestamp`, `visible`, `type`) VALUES
+(211, 2314, 'First post!', 15, 0, '2022-01-19 10:00:41', 1, 'image/png');
 
 -- --------------------------------------------------------
 
@@ -86,8 +93,15 @@ CREATE TABLE `user` (
   `username` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `email` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `password` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
-  `level` int(1) NOT NULL
+  `level` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `user`
+--
+
+INSERT INTO `user` (`uid`, `username`, `email`, `password`, `level`) VALUES
+(2314, 'user111', 'user111@example.com', '7d15da6ed8a0cdb2777573a0d720e5', 3);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -141,13 +155,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT a táblához `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `uid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2315;
 
 --
 -- Megkötések a kiírt táblákhoz
