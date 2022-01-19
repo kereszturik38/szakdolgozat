@@ -11,7 +11,7 @@
                 <div class="card-body p-4">
                     <div class="text-center">
                         <!-- Product name-->
-                        <h5 class="fw-bolder"><?php $p->get_title() ?></h5>
+                        <h5 class="fw-bolder"><?php echo $p->get_title(); ?></h5>
                     </div>
                 </div>
                 <!-- Product actions-->
