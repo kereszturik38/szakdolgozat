@@ -1,8 +1,7 @@
 <?php
-session_start();
-
 include "inc/db.php";
 
+session_start();
 $page = 'index';
 
 $menupontok = array(    'index' => "Home", 
