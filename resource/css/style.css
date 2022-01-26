@@ -1,5 +1,9 @@
-footer {
-    position:absolute;
-    bottom: 0;
-    width:100%;
+body{
+    padding-bottom: 70px;
+}
+
+.card-img{
+    max-width:450px;
+    max-height: 300px;
+
 }
