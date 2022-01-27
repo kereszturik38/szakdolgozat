@@ -9,7 +9,11 @@ if(isset($_POST["username"])) {
     $email = $_POST["email"];
 
     $sql = "INSERT INTO user (username,email,password) VALUES ('". $username . "','" . $email . "','" . $password . "')";
-    $conn->query($sql);
+    if($conn->query($sql) === TRUE){
+        $last_id = $conn->insert_id;
+
+        echo "Succesfully registered user " . $username . " with uid " . $last_id;
+    }
 
     
 }
