@@ -1,5 +1,5 @@
 <div class="container mx-auto w-50 h-100">
-    <form action="?page=login" method="post">
+    <form action="?page=register" method="post">
 
         <div class="form-group">
             <label for="username">Username</label>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="form-group">
-            <label for="username">Password</label>
+            <label for="password">Password</label>
             <input type="password" id="password" name="password" class="form-control" />
         </div>
 
