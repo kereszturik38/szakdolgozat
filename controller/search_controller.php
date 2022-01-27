@@ -12,7 +12,7 @@ include "inc/searchfield.php";
 
         <?php
 
-        if (isset($_GET["search"]) && $_GET["search"] != "") {
+        if (isset($_GET["search"])) {
 
 
             $p = new Post();
