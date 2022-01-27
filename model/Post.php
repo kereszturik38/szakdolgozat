@@ -37,7 +37,7 @@ class Post
         } else {
             echo $conn->error;
         }
-        //$conn->close();
+        $conn->close();
     }
 
     function filterByTitle(string $title, $conn)
@@ -52,7 +52,7 @@ class Post
             echo $conn->error;
         }
 
-        //$conn->close();
+        $conn->close();
     }
 
     function filterImageOnly(string $title, $conn)
@@ -67,7 +67,7 @@ class Post
             echo $conn->error;
         }
 
-        //$conn->close();
+        $conn->close();
     }
 
     function filterVideoOnly(string $title, $conn)
@@ -82,7 +82,7 @@ class Post
             echo $conn->error;
         }
 
-        //$conn->close();
+        $conn->close();
     }
 
     function get_post_id()
