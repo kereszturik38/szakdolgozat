@@ -2,7 +2,7 @@
 
 var_dump($_POST);
 
-if(isset($_POST["submit"])) {
+if(isset($_POST["username"])) {
 
     $username = $_POST["username"];
     $password = md5($_POST["password"]);
