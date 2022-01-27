@@ -2,7 +2,7 @@
 include "inc/db.php";
 
 session_start();
-$page = 'index';
+$page = "index";
 
 $menupontok = array(    'index' => "Home", 
                         'upload' => "Upload",

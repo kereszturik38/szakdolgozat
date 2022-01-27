@@ -1,6 +1,7 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <form action="index.php" method="get">
+            <input type="hidden" name="page" value="search" />
             <div class="text-center text-white input-group">
 
                 <input type="text" class="form-control-lg form-control" name="search" placeholder="Search...">

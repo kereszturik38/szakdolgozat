@@ -44,7 +44,37 @@ class Post
     {
 
 
-        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%'";
+        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' ";
+        $result = $conn->query($sql);
+        if ($conn->query($sql)) {
+            return $result;
+        } else {
+            echo $conn->error;
+        }
+
+        $conn->close();
+    }
+
+    function filterImageOnly(string $title, $conn)
+    {
+
+
+        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' AND type LIKE 'image/%' ";
+        $result = $conn->query($sql);
+        if ($conn->query($sql)) {
+            return $result;
+        } else {
+            echo $conn->error;
+        }
+
+        $conn->close();
+    }
+
+    function filterVideoOnly(string $title, $conn)
+    {
+
+
+        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' AND type LIKE 'video/%' ";
         $result = $conn->query($sql);
         if ($conn->query($sql)) {
             return $result;

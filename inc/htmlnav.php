@@ -1,25 +1,21 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand">Start Bootstrap</a>
+        <a class="navbar-brand"><i class="bi-images"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <?php
-
-                foreach ($menupontok as $key => $value) {
-                    $active = '';
-                    if ($_SERVER['REQUEST_URI'] == '/szakdolgozat/' . $key) $active = ' active';
-
-                    
-                ?>
-                    <li class="nav-item<?php echo $active; ?>">
-                        <a class="nav-link" href="index.php?page=<?php echo $key; ?>"><?php echo $value; ?></a>
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
-                <?php
-                }
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=settings">Settings</a>
+                    </li>
 
-                ?>
             </ul>
             <span class="d-flex">
 
