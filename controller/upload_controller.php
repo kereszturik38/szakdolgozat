@@ -7,7 +7,7 @@ if(isset($_POST["submit"])){
 
     echo $title;
 
-    $sql = "INSERT INTO post (uid,title) VALUES (2314,' ". $title . "')";
+    $sql = "INSERT INTO post (uid,title) VALUES (2314,'". $title . "')";
     $conn->query($sql);
 }
 

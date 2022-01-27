@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Jan 19. 13:21
+-- Létrehozás ideje: 2022. Jan 27. 12:51
 -- Kiszolgáló verziója: 10.4.14-MariaDB
 -- PHP verzió: 7.4.10
 
@@ -68,11 +68,11 @@ CREATE TABLE `post` (
   `post_id` int(255) NOT NULL,
   `uid` int(255) NOT NULL,
   `title` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
-  `bookmark_count` int(255) NOT NULL,
-  `comment_count` int(255) NOT NULL,
+  `bookmark_count` int(255) NOT NULL DEFAULT 0,
+  `comment_count` int(255) NOT NULL DEFAULT 0,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `visible` tinyint(1) NOT NULL,
-  `type` varchar(15) COLLATE utf8_hungarian_ci NOT NULL
+  `visible` tinyint(1) NOT NULL DEFAULT 1,
+  `type` varchar(15) COLLATE utf8_hungarian_ci NOT NULL DEFAULT 'image/png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -80,7 +80,12 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`post_id`, `uid`, `title`, `bookmark_count`, `comment_count`, `timestamp`, `visible`, `type`) VALUES
-(211, 2314, 'First post!', 15, 0, '2022-01-19 10:00:41', 1, 'image/png');
+(211, 2314, 'First_Post!', 15, 0, '2022-01-19 10:00:41', 1, 'image/png'),
+(1245, 2314, 'Second post!', 23, 0, '2022-01-26 10:34:16', 1, 'image/png'),
+(1247, 2314, ' wgwg', 0, 0, '2022-01-27 10:50:46', 1, 'image/png'),
+(1248, 2314, ' wgwggwg', 0, 0, '2022-01-27 10:50:50', 1, 'image/png'),
+(1249, 2314, ' asdwd', 0, 0, '2022-01-27 10:50:54', 1, 'image/png'),
+(1250, 2314, ' s', 0, 0, '2022-01-27 10:50:55', 1, 'image/png');
 
 -- --------------------------------------------------------
 
@@ -155,13 +160,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT a táblához `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
+  MODIFY `post_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1251;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2315;
+  MODIFY `uid` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2316;
 
 --
 -- Megkötések a kiírt táblákhoz
