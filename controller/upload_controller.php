@@ -1,9 +1,7 @@
 <?php
 include "model/Post.php";
 
-enum LevelUploadLimit{
-    
-}
+
 
 if(isset($_POST["submit"])){
 
@@ -14,6 +12,8 @@ if(isset($_POST["submit"])){
     $fileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));
 
     $p = new Post();
+
+    //change 
 
 
 

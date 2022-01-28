@@ -9,7 +9,7 @@
         <div class="form-group">
         <label for="fileToUpload">File</label>
         <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"/>
-        <small>Note: your file upload limit is </small>
+        <small>Note: your file upload limit is 5mb</small>
         </div>
 
         <div class="form-check">
