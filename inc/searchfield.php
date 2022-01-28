@@ -9,6 +9,7 @@
                     <option>Title</option>
                     <option>Image</option>
                     <option>Video</option>
+                    <option>Uploaded by</option>
                     <option>User</option>
                 </select>
                 <button type="submit" class="btn btn-lg btn-success">

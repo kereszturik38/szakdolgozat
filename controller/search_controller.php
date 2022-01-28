@@ -25,10 +25,10 @@ include "inc/searchfield.php";
                     $resultsToShow = $p->filterByTitle($search, $conn);
                     break;
                 case "Image":
-                    $resultsToShow = $p->filterImageOnly($search, $conn);
+                    $resultsToShow = $p->filterByType($search,"image/%", $conn);
                     break;
                 case "Video":
-                    $resultsToShow = $p->filterVideoOnly($search, $conn);
+                    $resultsToShow = $p->filterByType($search,"video/%", $conn);
                     break;
             }
             if ($resultsToShow && $resultsToShow->num_rows > 0) {

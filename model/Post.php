@@ -4,7 +4,6 @@
 class Post
 {
     private int $post_id;
-    private int $uid;
     private string $uploader;
     private string $title;
     private int $bookmark_count;
@@ -14,29 +13,13 @@ class Post
     private string $type;
 
 
-    function searchByPID(int $pid, $conn)
+    function upload($uid,string $uploader,string $title,bool $visible,$conn)
     {
-
-        $sql = "SELECT *,username FROM post INNER JOIN user ON post.uid = user.uid WHERE post_id =" . $pid;
-
-        $result = $conn->query($sql);
-        if ($conn->query($sql)) {
-            if ($result->num_rows > 0) {
-
-                $row = $result->fetch_assoc();
-                $this->post_id = $row["post_id"];
-                $this->uid = $row["uid"];
-                $this->uploader = $row["username"];
-                $this->title = $row["title"];
-                $this->bookmark_count = $row["bookmark_count"];
-                $this->comment_count = $row["comment_count"];
-                $this->timestamp = $row["timestamp"];
-                $this->visible = $row["visible"];
-                $this->type = $row["type"];
-            }
-        } else {
-            echo $conn->error;
-        }
+        $stmt = $conn->prepare("INSERT INTO post (post.uid,uploader,title,visible) VALUES (?,?,?,?)");
+        $stmt->bind_param("sssb",$uid,$uploader,$title,$visible);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        if ($results->num_rows > 0) return $results;
     }
 
     function filterByTitle(string $title, $conn)
@@ -50,25 +33,14 @@ class Post
         
     }
 
-    function filterImageOnly(string $title, $conn)
+    function filterByType(string $title,string $type, $conn)
     {
-        $type = "image/%";
         $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
         $stmt->bind_param("ss",$title,$type);
         $stmt->execute();
         $results = $stmt->get_result();
-        if ($results->num_rows > 0) return $results;;
+        if ($results->num_rows > 0) return $results;
         
-    }
-
-    function filterVideoOnly(string $title, $conn)
-    {
-        $type = "video/%";
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
-        $stmt->bind_param("ss",$title,$type);
-        $stmt->execute();
-        $results = $stmt->get_result();
-        if ($results->num_rows > 0) return $results;;
     }
 
     function get_post_id()

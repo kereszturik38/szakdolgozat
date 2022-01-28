@@ -27,7 +27,10 @@
 
                 <?php
 
-                if (isset($_SESSION["loggedIn"])) echo "<i class='bi-person-fill em-1'></i>" . $_SESSION["loggedIn"];
+                if (isset($_SESSION["loggedIn"])){
+                    echo "<i class='bi-person-fill em-1'></i>" . $_SESSION["username"] . " / " . $_SESSION["uid"];
+                }
+                
                 else {
                     echo "<a class='btn btn-secondary' href='index.php?page=login'>Login</a>";
                 }

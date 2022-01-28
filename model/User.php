@@ -21,7 +21,7 @@ class User
 
     function verify($username,$password,$conn)
     {
-        $stmt = $conn->prepare("SELECT uid,username,password,level FROM user WHERE username LIKE ? AND password LIKE ?");
+        $stmt = $conn->prepare("SELECT username,level FROM user WHERE username LIKE ? AND password LIKE ?");
         $stmt->bind_param("ss", $username,$password);
         $stmt->execute();
         $results = $stmt->get_result();

@@ -1,14 +1,24 @@
 <?php
+include "model/Post.php";
 
+enum LevelUploadLimit{
+    
+}
 
 if(isset($_POST["submit"])){
-    echo "is set";
+
+
+
     $title = $_POST["title"];
+    $file = basename($_FILES["fileToUpload"]["name"]);
+    $fileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));
 
-    echo $title;
+    $p = new Post();
 
-    $sql = "INSERT INTO post (uid,title) VALUES (2314,'". $title . "')";
-    $conn->query($sql);
+
+
+    
+
 }
 
 

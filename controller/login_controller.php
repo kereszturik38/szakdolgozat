@@ -10,7 +10,7 @@ if(isset($_POST["submit"])){
     $results = $user->verify($username,$password,$conn);
     if($results){
         if($results->num_rows > 0){
-            while($row = $results->fetch_assoc){
+            while($row = $results->fetch_assoc()){
                 $_SESSION["loggedIn"] = true;
                 $_SESSION["uid"] = $row["uid"];
                 $_SESSION["username"] = $row["username"];
@@ -18,7 +18,7 @@ if(isset($_POST["submit"])){
             }
             header('location:index.php');
         }else{
-            echo "Invalid username/password";
+            echo "<div class='alert alert-danger text-center' role='alert'>Invalid username/password</div>";
         }
     }else{
         echo "Something went wrong.Try again.";
