@@ -1,24 +1,20 @@
 <?php
+include "model/User.php";
 
-var_dump($_POST);
 
-if(isset($_POST["username"])) {
+if (isset($_POST["submit"])) {
 
     $username = $_POST["username"];
     $password = md5($_POST["password"]);
     $email = $_POST["email"];
 
-    $sql = "INSERT INTO user (username,email,password) VALUES ('". $username . "','" . $email . "','" . $password . "')";
-    if($conn->query($sql) === TRUE){
-        $last_id = $conn->insert_id;
-
-        echo "Succesfully registered user " . $username . " with uid " . $last_id;
+    $user = new User();
+    if($user->register($username,$email,$password,$conn)){
+        header('location:index.php?page=login');
+    }else{
+        echo "Something has gone wrong.Try again";
     }
-
-    
 }
 
 
 include "view/register.php";
-
-?>

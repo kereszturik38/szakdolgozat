@@ -37,52 +37,38 @@ class Post
         } else {
             echo $conn->error;
         }
-        $conn->close();
     }
 
     function filterByTitle(string $title, $conn)
     {
 
-
-        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' ";
-        $result = $conn->query($sql);
-        if ($conn->query($sql)) {
-            return $result;
-        } else {
-            echo $conn->error;
-        }
-
-        $conn->close();
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ?");
+        $stmt->bind_param("s",$title);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        if ($results->num_rows > 0) return $results;
+        
     }
 
     function filterImageOnly(string $title, $conn)
     {
-
-
-        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' AND type LIKE 'image/%' ";
-        $result = $conn->query($sql);
-        if ($conn->query($sql)) {
-            return $result;
-        } else {
-            echo $conn->error;
-        }
-
-        $conn->close();
+        $type = "image/%";
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
+        $stmt->bind_param("ss",$title,$type);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        if ($results->num_rows > 0) return $results;;
+        
     }
 
     function filterVideoOnly(string $title, $conn)
     {
-
-
-        $sql = "SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE '%" . $title . "%' AND type LIKE 'video/%' ";
-        $result = $conn->query($sql);
-        if ($conn->query($sql)) {
-            return $result;
-        } else {
-            echo $conn->error;
-        }
-
-        $conn->close();
+        $type = "video/%";
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
+        $stmt->bind_param("ss",$title,$type);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        if ($results->num_rows > 0) return $results;;
     }
 
     function get_post_id()

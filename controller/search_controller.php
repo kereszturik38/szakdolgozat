@@ -17,7 +17,7 @@ include "inc/searchfield.php";
 
             $p = new Post();
 
-            $search = htmlspecialchars($_GET["search"]);
+            $search = "%" . $_GET["search"] . "%";
             $select = $_GET["select"];
 
             switch ($select) {
@@ -31,9 +31,9 @@ include "inc/searchfield.php";
                     $resultsToShow = $p->filterVideoOnly($search, $conn);
                     break;
             }
+            if ($resultsToShow && $resultsToShow->num_rows > 0) {
 
 
-            if ($resultsToShow->num_rows > 0) {
                 while ($row = $resultsToShow->fetch_assoc()) {
 
                     //var_dump($row);
@@ -46,9 +46,11 @@ include "inc/searchfield.php";
 
                     include "view/results.php";
                 }
-            } else {
-                include "view/default.php";
+            } else{
+                include "view/noresults.php";
             }
+        } else {
+            include "view/default.php";
         }
 
 

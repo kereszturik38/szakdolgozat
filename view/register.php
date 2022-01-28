@@ -17,7 +17,7 @@
         </div>
 
 
-        <button class="btn btn-primary mt-5" type="submit">Register</button>
+        <button class="btn btn-primary mt-5" type="submit" name="submit" value="submit">Register</button>
 
 
     </form>

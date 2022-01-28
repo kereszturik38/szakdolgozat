@@ -1,6 +1,8 @@
 <footer class="mt-auto py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+        <p class="m-0 text-center text-white">
+            <i class="bi-github">kereszturik38</i>
+        </p>
     </div>
 </footer>
 
