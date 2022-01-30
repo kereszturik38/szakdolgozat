@@ -12,21 +12,36 @@ class User
         $stmt = $conn->prepare("INSERT INTO user (username,email,password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
 
-        if ($stmt->execute() === TRUE) {
+        if ($stmt->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
+        $stmt->close();
     }
 
-    function verify($username,$password,$conn)
+    function verify($username, $password, $conn)
     {
-        $stmt = $conn->prepare("SELECT username,level FROM user WHERE username LIKE ? AND password LIKE ?");
-        $stmt->bind_param("ss", $username,$password);
-        $stmt->execute();
-        $results = $stmt->get_result();
+        $stmt = $conn->prepare("SELECT uid,username,email,level FROM user WHERE username LIKE ? AND password LIKE ?");
+        $stmt->bind_param("ss", $username, $password);
 
-        return $results;
+
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            if ($results->num_rows === 0) {
+                echo "<div class='alert alert-danger text-center' role='alert'>Invalid username or password combination.</div>";
+            } else {
+                while ($row = $results->fetch_assoc()) {
+                    $this->uid = $row["uid"];
+                    $this->username = $row["username"];
+                    $this->email = $row["email"];
+                    $this->level = $row["level"];
+                }
+            }
+        } else {
+            echo "<div class='alert alert-danger text-center' role='alert'>Something has gone wrong.Try again.</div>";
+        }
+        $stmt->close();
     }
 
 

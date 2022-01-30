@@ -7,22 +7,14 @@ if(isset($_POST["submit"])){
     $email = $_POST["email"];
 
     $user = new User();
-    $results = $user->verify($username,$password,$conn);
-    if($results){
-        if($results->num_rows > 0){
-            while($row = $results->fetch_assoc()){
-                $_SESSION["loggedIn"] = true;
-                $_SESSION["uid"] = $row["uid"];
-                $_SESSION["username"] = $row["username"];
-                $_SESSION["level"] = $row["level"];
-            }
-            header('location:index.php');
-        }else{
-            echo "<div class='alert alert-danger text-center' role='alert'>Invalid username/password</div>";
-        }
-    }else{
-        echo "Something went wrong.Try again.";
-    }
+    $user->verify($username,$password,$conn);
+    $_SESSION["loggedIn"] = true;
+    $_SESSION["uid"] = $user->get_uid();
+    $_SESSION["username"] = $user->get_username();
+    $_SESSION["email"] = $user->get_email();
+    $_SESSION["level"] = $user->get_level();
+    header("location: index.php");
+
 }
 
 

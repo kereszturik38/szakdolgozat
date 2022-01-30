@@ -1,6 +1,6 @@
 <?php
 
-echo "settings controller";
+session_unset();
 
 
 ?>

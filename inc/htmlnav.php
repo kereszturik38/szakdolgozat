@@ -28,7 +28,7 @@
                 <?php
 
                 if (isset($_SESSION["loggedIn"])){
-                    echo "<i class='bi-person-fill em-1'></i>" . $_SESSION["username"] . " / " . $_SESSION["uid"];
+                    echo "<i class='bi-person-fill em-1'></i>" . $_SESSION["username"];
                 }
                 
                 else {

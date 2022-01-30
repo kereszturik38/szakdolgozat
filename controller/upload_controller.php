@@ -6,13 +6,21 @@ include "model/Post.php";
 if(isset($_POST["submit"])){
 
 
-
     $title = $_POST["title"];
     $file = basename($_FILES["fileToUpload"]["name"]);
     $fileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));
+    $public = isset($_POST["publicCheck"]) ? 1 : 0;
+
+    
+
 
     $p = new Post();
+    $p->upload($_SESSION["uid"],$title,$public,$fileType,$conn);
 
+
+    $uploadOK = 1;
+    
+    
     //change 
 
 
