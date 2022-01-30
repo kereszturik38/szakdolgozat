@@ -11,11 +11,11 @@ if(isset($_POST["submit"])){
     $fileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));
     $public = isset($_POST["publicCheck"]) ? 1 : 0;
 
-    
+    $uploadType = "image/" . $fileType;
 
 
     $p = new Post();
-    $p->upload($_SESSION["uid"],$title,$public,$fileType,$conn);
+    $p->upload($_SESSION["uid"],$title,$public,$uploadType,$conn);
 
 
     $uploadOK = 1;
