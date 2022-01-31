@@ -33,12 +33,10 @@ include "inc/searchfield.php";
             }
             if ($resultsToShow && $resultsToShow->num_rows > 0) {
 
-
+                
                 while ($row = $resultsToShow->fetch_assoc()) {
 
-                    var_dump($row);
                     $imgstr = "posts/" . $row["post_id"] . "-" . $row["uid"] . "/" . $row["post_id"] . "." . str_replace("image/","",$row["type"]);
-                    echo $imgstr;
 
                     include "view/results.php";
                 }
@@ -48,7 +46,6 @@ include "inc/searchfield.php";
         } else {
             include "view/default.php";
         }
-
 
         ?>
 
