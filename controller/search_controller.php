@@ -36,13 +36,9 @@ include "inc/searchfield.php";
 
                 while ($row = $resultsToShow->fetch_assoc()) {
 
-                    //var_dump($row);
-
-                    $path = glob("posts/" . $row["post_id"] . "/" . $row["post_id"] . ".png");
-                    //echo end($path);
-                    if ($path != false) {
-                        $imgstr =  end($path);
-                    }
+                    var_dump($row);
+                    $imgstr = "posts/" . $row["post_id"] . "-" . $row["uid"] . "/" . $row["post_id"] . "." . str_replace("image/","",$row["type"]);
+                    echo $imgstr;
 
                     include "view/results.php";
                 }

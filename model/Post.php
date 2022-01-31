@@ -40,8 +40,7 @@ class Post
         if ($stmt->execute()) {
             $this->post_id = $stmt->insert_id;
             $this->filterByPID($this->post_id, $conn);
-            var_dump($this);
-            echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
+            //echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
         } else {
             echo "<div class='alert alert-danger text-center' role='alert'>Upload failed.</div>";
         }
