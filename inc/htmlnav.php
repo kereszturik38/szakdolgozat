@@ -18,7 +18,7 @@
 
             </ul>
 
-            <a class="btn btn-primary mx-5" href="index.php?page=upload">
+            <a class="btn btn-success mx-5" href="index.php?page=upload">
                 Upload <span class="badge badge-light"> <i class="bi-upload"></i> </span>
             </a>
 

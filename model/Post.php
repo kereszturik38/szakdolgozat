@@ -19,6 +19,8 @@ class Post
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             while ($row = $results->fetch_assoc()) {
+                $this->post_id = $post_id;
+                
                 $this->post_uid = $row["uid"];
                 $this->title = $row["title"];
                 $this->bookmark_count = $row["bookmark_count"];

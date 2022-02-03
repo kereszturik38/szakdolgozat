@@ -7,6 +7,23 @@ class User
     private string $email;
     private int $level;
 
+    function filterByUID($uid, $conn)
+    {
+        $stmt = $conn->prepare("SELECT * FROM user WHERE uid LIKE ?");
+        $stmt->bind_param("i", $uid);
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            while ($row = $results->fetch_assoc()) {
+                $this->uid = $uid;
+                
+                $this->username = $row["username"];
+                $this->email = $row["email"];
+                $this->level = $row["level"];
+            }
+        }
+        $stmt->close();
+    }
+
     function register($username, $email, $password, $conn)
     {
         $stmt = $conn->prepare("INSERT INTO user (username,email,password) VALUES (?, ?, ?)");
