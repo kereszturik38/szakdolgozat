@@ -1,5 +1,5 @@
-<div class="container align-items-center bg-dark">
-    <div id="carousel_most_popular" class="carousel slide" data-bs-ride="carousel">
+<div>
+    <div id="carousel_most_popular" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner">
 
             <?php
@@ -7,7 +7,7 @@
             ?>
                 <div class="carousel-item <?php if ($key === 0) echo 'active'; ?>">
                     <img class="d-block w-100" src=<?php echo fetch_image($img) ?> alt=<?php echo $img->get_title(); ?>>
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block text-white">
                     <h2><?php echo $img->get_title(); ?></h2>
                     <h3><?php echo $img->get_post_uid(); ?></h3>
                     </div>
