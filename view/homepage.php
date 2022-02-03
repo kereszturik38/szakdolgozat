@@ -1,21 +1,18 @@
-<div class="container align-items-center">
+<div class="container align-items-center bg-dark">
     <div id="carousel_most_popular" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
 
             <?php
             foreach ($topImages as $key => $img) {
             ?>
-                <button type="button" data-bs-target="#carousel_most_popular" data-bs-slide-to="0" <?php if ($key === 0) echo 'class="active" aria-current="true"' ?> aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carousel_most_popular" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carousel_most_popular" data-bs-slide-to="2" aria-label="Slide 3"></button>
-
                 <div class="carousel-item <?php if ($key === 0) echo 'active'; ?>">
-                    <img class="d-block w-100" src=<?php echo fetch_image($img) ?> alt="...">
+                    <img class="d-block w-100" src=<?php echo fetch_image($img) ?> alt=<?php echo $img->get_title(); ?>>
+                    <div class="carousel-caption d-none d-md-block">
+                    <h2><?php echo $img->get_title(); ?></h2>
+                    <h3><?php echo $img->get_post_uid(); ?></h3>
+                    </div>
                 </div>
-                <div class="carousel-caption d-none d-md-block">
-                    <h5></h5>
-                    <p>Some representative placeholder content for the first slide.</p>
-                </div>
+                
             <?php
             }
 
