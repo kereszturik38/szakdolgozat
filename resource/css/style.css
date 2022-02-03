@@ -12,3 +12,7 @@ body{
 }
 
 .card-img:hover {opacity: 0.7;}
+
+.carousel img {
+    max-width: none;
+  }

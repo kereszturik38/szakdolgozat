@@ -20,7 +20,7 @@ class Post
             $results = $stmt->get_result();
             while ($row = $results->fetch_assoc()) {
                 $this->post_id = $post_id;
-                
+
                 $this->post_uid = $row["uid"];
                 $this->title = $row["title"];
                 $this->bookmark_count = $row["bookmark_count"];
@@ -79,6 +79,18 @@ class Post
     {
         $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
         $stmt->bind_param("ss", $title, $type);
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            return $results;
+        }
+        $stmt->close();
+    }
+
+    function get_popular(int $limit,$conn)
+    {
+        $stmt = $conn->prepare("SELECT * FROM post ORDER BY bookmark_count LIMIT ?");
+        $stmt->bind_param("i", $limit);
+
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;

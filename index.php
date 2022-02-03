@@ -1,5 +1,6 @@
 <?php
 include "inc/db.php";
+include "inc/fetch_image.php";
 
 session_start();
 

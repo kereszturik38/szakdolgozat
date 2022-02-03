@@ -36,7 +36,8 @@ include "inc/searchfield.php";
                 
                 while ($row = $resultsToShow->fetch_assoc()) {
 
-                    $imgstr = "posts/" . $row["post_id"] . "-" . $row["uid"] . "/" . $row["post_id"] . "." . str_replace("image/","",$row["type"]);
+                    $p->filterByPID($row["post_id"],$conn);
+                    $imgstr = fetch_image($p);
 
                     include "view/results.php";
                 }
