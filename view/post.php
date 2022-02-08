@@ -19,24 +19,47 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-5">
+
+        
+        <form method="post">
+            <div class="mb-3">
+                <label for="usercomment">
+                    <h5>Leave a comment</h5>
+                </label>
+                <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
+                <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
+            </div>
+
+        </form>
+        </div>
         <div class="mt-5">
             <h2>Comments <span class="badge badge-secondary bg-dark"><?php echo $p->get_comment_count() ?></span></h2>
+
+
+
             <?php
+
             if ($comments != NULL) {
                 foreach ($comments as $comment) {
                     $u->filterByUID($comment->get_uid(), $conn);
             ?>
                     <div class="d-flex bg-gray">
                         <div class="flex-grow-1 ms-3">
-                            <a class="link link-success" href="#"><h5><?php echo $u->get_username(); ?> <small class="text-muted"><i>Posted on <?php echo $comment->get_time_commented(); ?></i></small></h5></a>
+                            <a class="link link-success" href="#">
+                                <h5><?php echo $u->get_username(); ?> <small class="text-muted"><i>Posted on <?php echo $comment->get_time_commented(); ?></i></small></h5>
+                            </a>
                             <p><?php echo $comment->get_text();  ?></p>
                         </div>
                     </div>
 
+
             <?php
+
+
                 }
             }
-
             ?>
 
         </div>

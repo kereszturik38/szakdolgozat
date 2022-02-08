@@ -44,14 +44,14 @@ class Post
             $this->filterByPID($this->post_id, $conn);
             //echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
         } else {
-            echo "<div class='alert alert-danger text-center' role='alert'>Upload failed.</div>";
+            echo "upload failure";
         }
         $stmt->close();
     }
 
     function delete(int $post_id, $conn)
     {
-        $stmt = $conn->prepare("DELETE FROM post WHERE post_id LIKE ?");
+        $stmt = $conn->prepare("DELETE FROM post WHERE post_id = ?");
         $stmt->bind_param("i", $post_id);
 
         if ($stmt->execute()) {

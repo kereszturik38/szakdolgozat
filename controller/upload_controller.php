@@ -22,13 +22,11 @@ if (isset($_POST["submit"])) {
     $upload_dir = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/";
     if(is_dir($upload_dir)){
         $uploadOK = 0;
-    }else{
-        mkdir($upload_dir);
     }
     $upload_target = $upload_dir .  $p->get_post_id() . "." . $fileType;
 
 
-    $realImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    $realImage = @is_array(getimagesize($_FILES["fileToUpload"]["tmp_name"]));
     if ($realImage === false) {
         echo "<div class='alert alert-danger text-center' role='alert'>Upload failed. File is not an image</div>";
         $uploadOK = 0;
@@ -39,13 +37,16 @@ if (isset($_POST["submit"])) {
     }
     if ($uploadOK === 0) {
         echo "<div class='alert alert-danger text-center' role='alert'>Upload failed.</div>";
+        $p->delete($p->get_post_id(),$conn);
         // if everything is ok, try to upload file
-    } else {
+    } else if($uploadOK === 1){
+        mkdir($upload_dir);
         if (@move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],$upload_target)) {
             echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
             echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
         } else {
             $p->delete($p->get_post_id(),$conn);
+            unlink($upload_dir);
             echo "Sorry, there was an error uploading your file.";
         }
     }
