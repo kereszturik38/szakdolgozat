@@ -7,7 +7,7 @@ class Comment
     private string $text;
     private string $time_commented;
 
-    function commentsForPost($post_id, $uid = '%',$conn)
+    function commentsForPIDAndUID($post_id, $uid,$conn)
     {
         $stmt = $conn->prepare("SELECT * FROM comment WHERE post_id LIKE ? AND uid LIKE ?");
         $stmt->bind_param("ii", $post_id,$uid);
@@ -22,6 +22,47 @@ class Comment
             }
         }
         $stmt->close();
+    }
+
+    function commentsForPID($post_id,$conn)
+    {
+        $allComments = array();
+        $stmt = $conn->prepare("SELECT * FROM comment WHERE post_id LIKE ?");
+        $stmt->bind_param("i", $post_id);
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            while ($row = $results->fetch_assoc()) {
+                $this->comment_id = $row["comment_id"];
+                $this->uid = $row["uid"];
+                $this->post_id = $row["post_id"];
+                $this->text = $row["text"];
+                $this->time_commented = $row["time_commented"];
+
+                array_push($allComments,clone $this);
+            }
+            
+        }
+        return $allComments;
+        $stmt->close();
+    }
+
+    function get_comment_id(){
+        return $this->comment_id;
+    }
+
+    function get_uid(){
+        return $this->uid;
+    }
+
+    function get_post_id(){
+        return $this->post_id;
+    }
+
+    function get_text(){
+        return $this->text;
+    }
+    function get_time_commented(){
+        return $this->time_commented;
     }
 
 
