@@ -12,8 +12,15 @@ class Post
     private int $visible;
     private string $type;
 
+
+
+
+
     function filterByPID($post_id, $conn)
     {
+        $this->update_bookmarks($post_id, $conn);
+        $this->update_comments($post_id, $conn);
+
         $stmt = $conn->prepare("SELECT * FROM post WHERE post_id LIKE ?");
         $stmt->bind_param("i", $post_id);
         if ($stmt->execute()) {
@@ -86,7 +93,7 @@ class Post
         $stmt->close();
     }
 
-    function get_popular(int $limit,$conn)
+    function get_popular(int $limit, $conn)
     {
         $stmt = $conn->prepare("SELECT * FROM post ORDER BY bookmark_count LIMIT ?");
         $stmt->bind_param("i", $limit);
@@ -97,6 +104,51 @@ class Post
         }
         $stmt->close();
     }
+
+    function get_bookmarks(int $uid, $conn)
+    {
+
+        $bookmarks = array();
+
+        $stmt = $conn->prepare("SELECT post_id FROM bookmarks WHERE uid = ?");
+        $stmt->bind_param("i", $uid);
+
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            while ($row = $results->fetch_assoc()) {
+                $this->post_id = $row["post_id"];
+                $this->filterByPID($row["post_id"], $conn);
+                array_push($bookmarks, clone $this);
+            }
+        }
+        return $bookmarks;
+        $stmt->close();
+    }
+
+    function update_bookmarks(int $post_id, $conn)
+    {
+        $stmt = $conn->prepare("UPDATE post SET bookmark_count =(SELECT COUNT(post_id) FROM bookmarks WHERE post_id=?) WHERE post_id=?");
+        $stmt->bind_param("ii", $post_id, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
+
+    function update_comments(int $post_id, $conn)
+    {
+        $stmt = $conn->prepare("UPDATE post SET comment_count =(SELECT COUNT(post_id) FROM comment WHERE post_id=?) WHERE post_id=?");
+        $stmt->bind_param("ii", $post_id, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
+
 
 
 
