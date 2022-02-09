@@ -16,7 +16,6 @@ if (isset($_GET["page"])) {
             $imgstr = fetch_image($p);
             array_push($topImages,clone $p);
         }
-        
         include "view/homepage.php";
     }
 

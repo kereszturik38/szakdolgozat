@@ -149,7 +149,46 @@ class Post
         $stmt->close();
     }
 
+    function is_bookmarked(int $uid, int $post_id, $conn)
+    {
+        $stmt = $conn->prepare("SELECT * FROM bookmarks WHERE uid =? AND post_id=?");
+        $stmt->bind_param("ii", $uid, $post_id);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
 
+    function bookmark(int $uid, int $post_id, $conn)
+    {
+        $stmt = $conn->prepare("INSERT INTO bookmarks (uid,post_id) VALUES (?,?)");
+        $stmt->bind_param("ii", $uid, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
+
+    function remove_bookmark(int $uid, int $post_id, $conn)
+    {
+        $stmt = $conn->prepare("DELETE FROM bookmarks WHERE uid=? AND post_id=?");
+        $stmt->bind_param("ii", $uid, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
 
 
     function get_post_id()

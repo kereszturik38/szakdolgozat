@@ -38,7 +38,6 @@ include "inc/searchfield.php";
 
                     $p->filterByPID($row["post_id"],$conn);
                     $imgstr = fetch_image($p);
-
                     include "view/results.php";
                 }
             } else{

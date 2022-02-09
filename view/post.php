@@ -11,28 +11,70 @@
 
                 <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
                 <div class="d-flex">
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-bookmark em-1"></i>
-                        Add to bookmarks
+                    <?php if (!$p->is_bookmarked($_SESSION["uid"],$p->get_post_id(),$conn)) { ?>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
+                            <i class="bi-bookmark em-1"></i>
+                            Add to bookmarks
+                        </button>
+                    <?php } else { ?>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button" id="removebookmarkButton">
+                            <i class="bi-bookmark em-1"></i>
+                            Remove from bookmarks
+                        </button>
+                    <?php } ?>
+                    <script>
+                        $(document).ready(function() {
+                            $("#bookmarkButton").click(function() {
 
-                    </button>
+                                $.ajax({
+                                    type: "POST",
+                                    urL: "index.php?page=post&id=" + <?php echo $p->get_post_id(); ?>,
+                                    data: {
+                                        bookmark: "set"
+                                    },
+                                    success: function(result) {
+                                        $("#bookmarkButton").text("Added to your bookmarks");
+                                    },
+                                    error: function() {
+                                        $("#bookmarkButton").text("Already in your bookmarks");
+                                    }
+                                })
+                            });
+                            $("#removebookmarkButton").click(function() {
+
+                                $.ajax({
+                                    type: "POST",
+                                    urL: "index.php?page=post&id=" + <?php echo $p->get_post_id(); ?>,
+                                    data: {
+                                        bookmark: "unset"
+                                    },
+                                    success: function(result) {
+                                        $("#removebookmarkButton").text("Removed from bookmarks");
+                                    },
+                                    error: function() {
+                                        $("#removebookmarkButton").text("Try again");
+                                    }
+                                })
+                            });
+                        })
+                    </script>
                 </div>
             </div>
         </div>
 
         <div class="mt-5">
 
-        
-        <form method="post">
-            <div class="mb-3">
-                <label for="usercomment">
-                    <h5>Leave a comment</h5>
-                </label>
-                <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
-                <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
-            </div>
 
-        </form>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="usercomment">
+                        <h5>Leave a comment</h5>
+                    </label>
+                    <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
+                    <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
+                </div>
+
+            </form>
         </div>
         <div class="mt-5">
             <h2>Comments <span class="badge badge-secondary bg-dark"><?php echo $p->get_comment_count() ?></span></h2>
