@@ -13,11 +13,13 @@ if(isset($_POST["bookmark"])){
         $post_id = $_GET["id"];
         $user = $_SESSION["uid"];
         $p->bookmark($user,$post_id,$conn);
+        $p->update_bookmarks($post_id,$conn);
     }
     if($_POST["bookmark"] === "unset"){
         $post_id = $_GET["id"];
         $user = $_SESSION["uid"];
         $p->remove_bookmark($user,$post_id,$conn);
+        $p->update_bookmarks($post_id,$conn);
     }
     
 }

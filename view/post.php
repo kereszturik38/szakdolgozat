@@ -6,7 +6,7 @@
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
                     <span><a class="link-success text-decoration-none" href="#"><?php echo $u->get_username(); ?></a></span><br>
-                    <i class="bi-bookmark em-1"><span class="badge badge-secondary bg-dark"><?php echo $p->get_bookmark_count() ?></span></i>
+                    <i class="bi-bookmark em-1"><span class="badge badge-secondary bg-dark" id="bookmarkCount"><?php echo $p->get_bookmark_count() ?></span></i>
                 </div>
 
                 <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
@@ -34,6 +34,7 @@
                                     },
                                     success: function(result) {
                                         $("#bookmarkButton").text("Added to your bookmarks");
+                                        $("#bookmarkCount").text(<?php echo $p->get_bookmark_count() ?>);
                                     },
                                     error: function() {
                                         $("#bookmarkButton").text("Already in your bookmarks");
@@ -50,6 +51,7 @@
                                     },
                                     success: function(result) {
                                         $("#removebookmarkButton").text("Removed from bookmarks");
+                                        $("#bookmarkCount").text(<?php echo $p->get_bookmark_count() ?>);
                                     },
                                     error: function() {
                                         $("#removebookmarkButton").text("Try again");
