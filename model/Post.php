@@ -128,10 +128,20 @@ class Post
     function update_bookmarks(int $post_id, $conn)
     {
         $stmt = $conn->prepare("UPDATE post SET bookmark_count =(SELECT COUNT(post_id) FROM bookmarks WHERE post_id=?) WHERE post_id=?");
-        $stmt->bind_param("ii", $post_id, $post_id);
+        $stmt->bind_param("ii", $post_id,$post_id);
         if ($stmt->execute()) {
-            return true;
-        } else {
+            $stmt2 = $conn->prepare("SELECT bookmark_count FROM post WHERE post_id=?");
+            $stmt2->bind_param("i",$post_id);
+            if($stmt2->execute()){
+                $result = $stmt2->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $this->bookmark_count = $row["bookmark_count"];
+                }
+                return true;
+            } else{
+                return false;
+            }
+        } else{
             return false;
         }
         $stmt->close();
@@ -140,10 +150,20 @@ class Post
     function update_comments(int $post_id, $conn)
     {
         $stmt = $conn->prepare("UPDATE post SET comment_count =(SELECT COUNT(post_id) FROM comment WHERE post_id=?) WHERE post_id=?");
-        $stmt->bind_param("ii", $post_id, $post_id);
+        $stmt->bind_param("ii", $post_id,$post_id);
         if ($stmt->execute()) {
-            return true;
-        } else {
+            $stmt2 = $conn->prepare("SELECT comment_count FROM post WHERE post_id=?");
+            $stmt2->bind_param("i",$post_id);
+            if($stmt2->execute()){
+                $result = $stmt2->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $this->comment_count = $row["comment_count"];
+                }
+                return true;
+            } else{
+                return false;
+            }
+        } else{
             return false;
         }
         $stmt->close();

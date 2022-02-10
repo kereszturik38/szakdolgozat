@@ -28,13 +28,17 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    urL: "index.php?page=post&id=" + <?php echo $p->get_post_id(); ?>,
+                                    url: "ajax/bookmarks_update.php?id=" + <?php echo $p->get_post_id(); ?>,
                                     data: {
+                                        post_id: <?php echo $p->get_post_id(); ?>,
+                                        uid: <?php echo $_SESSION["uid"]; ?>,
                                         bookmark: "set"
                                     },
-                                    success: function(result) {
+                                    dataType: "text",
+                                    success: function(count) {
                                         $("#bookmarkButton").text("Added to your bookmarks");
-                                        $("#bookmarkCount").text(<?php echo $p->get_bookmark_count() ?>);
+                                        $('#bookmarkButton').prop('disabled',true);
+                                        $("#bookmarkCount").text(count);
                                     },
                                     error: function() {
                                         $("#bookmarkButton").text("Already in your bookmarks");
@@ -45,13 +49,17 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    urL: "index.php?page=post&id=" + <?php echo $p->get_post_id(); ?>,
+                                    url: "ajax/bookmarks_update.php?id=" + <?php echo $p->get_post_id(); ?>,
                                     data: {
+                                        post_id: <?php echo $p->get_post_id(); ?>,
+                                        uid: <?php echo $_SESSION["uid"]; ?>,
                                         bookmark: "unset"
                                     },
-                                    success: function(result) {
+                                    dataType: "text",
+                                    success: function(count) {
                                         $("#removebookmarkButton").text("Removed from bookmarks");
-                                        $("#bookmarkCount").text(<?php echo $p->get_bookmark_count() ?>);
+                                        $('#removebookmarkButton').prop('disabled',true);
+                                        $("#bookmarkCount").text(count);
                                     },
                                     error: function() {
                                         $("#removebookmarkButton").text("Try again");
