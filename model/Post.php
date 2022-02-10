@@ -96,7 +96,7 @@ class Post implements JsonSerializable
 
     function get_popular(int $limit, $conn)
     {
-        $stmt = $conn->prepare("SELECT * FROM post ORDER BY bookmark_count LIMIT ?");
+        $stmt = $conn->prepare("SELECT * FROM post ORDER BY bookmark_count DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
 
         if ($stmt->execute()) {

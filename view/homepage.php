@@ -10,7 +10,9 @@
                     <img class="d-block w-100" src=<?php echo fetch_image($img) ?> alt=<?php echo $img->get_title(); ?>>
                     <div class="carousel-caption d-none d-md-block text-white">
                     <h2><?php echo $img->get_title(); ?></h2>
-                    <h3><?php echo $u->get_username(); ?></h3>
+                    <h3><?php echo $u->get_username(); ?>
+                        <i class="bi-bookmark-fill mx-2"><?php echo $img->get_bookmark_count(); ?></i>
+                    </h3>
                     </div>
                 </div>
                 
@@ -29,23 +31,3 @@
         </button>
     </div>
 </div>
-
-<!--
-<div>
-    <div class="container align-items-center">
-        <div id="carousel_most_popular" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="posts/1293-2330/1293.jpg" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="posts/1292-2330/1292.jpg" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="posts/1291-2330/1291.jpg" alt="...">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-        -->

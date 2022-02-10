@@ -6,7 +6,11 @@
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
                     <span><a class="link-success text-decoration-none" href="#"><?php echo $u->get_username(); ?></a></span><br>
-                    <i class="bi-bookmark em-1"><span class="badge badge-secondary bg-dark" id="bookmarkCount"><?php echo $p->get_bookmark_count() ?></span></i>
+                    <i class=<?php echo $icon;?>id="bookmarkIcon">
+                        <span class="badge badge-secondary bg-dark" id="bookmarkCount">
+                            <?php echo $p->get_bookmark_count() ?>
+                        </span>
+                    </i>
                 </div>
 
                 <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
@@ -88,6 +92,7 @@
                     $("#bookmarkButton").text("Added to your bookmarks");
                     $('#bookmarkButton').prop('disabled', true);
                     $("#bookmarkCount").text(count);
+                    $("#bookmarkIcon").removeClass("bi-bookmark").addClass("bi-bookmark-fill");
                 },
                 error: function() {
                     $("#bookmarkButton").text("Already in your bookmarks");
@@ -109,6 +114,7 @@
                     $("#removebookmarkButton").text("Removed from bookmarks");
                     $('#removebookmarkButton').prop('disabled', true);
                     $("#bookmarkCount").text(count);
+                    $("#bookmarkIcon").removeClass("bi-bookmark-fill").addClass("bi-bookmark");
                 },
                 error: function() {
                     $("#removebookmarkButton").text("Try again");
