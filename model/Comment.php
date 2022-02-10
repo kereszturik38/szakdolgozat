@@ -1,8 +1,9 @@
 <?php
-class Comment
+class Comment implements JsonSerializable
 {
     private int $comment_id;
     private int $uid;
+    private string $username;
     private int $post_id;
     private string $text;
     private string $time_commented;
@@ -68,6 +69,14 @@ class Comment
         return $this->uid;
     }
 
+    function get_username(){
+        return $this->username;
+    }
+
+    function set_username(string $username){
+        $this->username = $username;
+    }
+
     function get_post_id(){
         return $this->post_id;
     }
@@ -79,6 +88,11 @@ class Comment
         return $this->time_commented;
     }
 
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 }
 

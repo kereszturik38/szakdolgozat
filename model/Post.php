@@ -1,7 +1,7 @@
 <?php
 
 
-class Post
+class Post implements JsonSerializable
 {
     private int $post_id;
     private int $post_uid;
@@ -245,5 +245,10 @@ class Post
     function get_type()
     {
         return $this->type;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

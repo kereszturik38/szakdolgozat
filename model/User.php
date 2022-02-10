@@ -1,6 +1,6 @@
 <?php
 
-class User
+class User implements JsonSerializable
 {
     private int $uid;
     private string $username;
@@ -80,5 +80,10 @@ class User
     function get_level()
     {
         return $this->level;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }
