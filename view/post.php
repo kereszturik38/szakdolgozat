@@ -147,7 +147,7 @@
                             <div class="d-flex bg-gray">
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="#">
-                                    <h5>${currentObject.uid}<small class="text-muted"><i>Posted on ${currentObject.time_commented}</i></small></h5>
+                                    <h5>${currentObject.username}<small class="text-muted"><i>Posted on ${currentObject.time_commented}</i></small></h5>
                                 </a>
                                 <p>${currentObject.text}</p>
                             </div>

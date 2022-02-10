@@ -2,6 +2,7 @@
 include  "../inc/db.php";
 include "../model/Comment.php";
 include "../model/Post.php";
+include "../model/User.php";
 
 $p = new Post();
 $c = new Comment();
