@@ -3,7 +3,7 @@
         <!-- File type badge -->
         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-image em-1"></i></div>
         <!-- Post image-->
-        <img class="card-img" src="<?php echo $imgstr; ?>" alt=<?php echo $row["title"]; ?> data-postid=<?php echo $row["post_id"]; ?> />
+        <img class="card-img result" src="<?php echo $imgstr; ?>" alt=<?php echo $row["title"]; ?> data-postid=<?php echo $row["post_id"]; ?> />
         <!-- Post details-->
         <div class="card-body">
             <div class="text-center">
