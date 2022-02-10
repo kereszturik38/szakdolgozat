@@ -46,7 +46,7 @@ class User implements JsonSerializable
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             if ($results->num_rows === 0) {
-                echo "<div class='alert alert-danger text-center' role='alert'>Invalid username or password combination.</div>";
+                return 1;
             } else {
                 while ($row = $results->fetch_assoc()) {
                     $this->uid = $row["uid"];
@@ -54,9 +54,10 @@ class User implements JsonSerializable
                     $this->email = $row["email"];
                     $this->level = $row["level"];
                 }
+                return 0;
             }
         } else {
-            echo "<div class='alert alert-danger text-center' role='alert'>Something has gone wrong.Try again.</div>";
+            return 2;
         }
         $stmt->close();
     }
