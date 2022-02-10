@@ -71,6 +71,7 @@ class Post implements JsonSerializable
 
     function filterByTitle(string $title, $conn)
     {
+        
 
         $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ?");
         $stmt->bind_param("s", $title);
