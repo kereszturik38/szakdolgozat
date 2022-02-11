@@ -12,7 +12,7 @@ if (isset($_POST)) {
     
     if ($_POST["uid"] != "undefined") {
         $timeBetween = time() - $_POST["timestamp"];
-        if($timeBetween < 80) die(json_encode("message: timeout_error, uid:" . $_POST["uid"] . ",time: " .$timeBetween));
+        if($timeBetween < 1) die(json_encode("message: timeout_error, uid:" . $_POST["uid"] . ",time: " .$timeBetween));
 
         $post_id = $_POST["post_id"];
         $comment_text = $_POST["usercomment"];
@@ -26,7 +26,7 @@ if (isset($_POST)) {
                         $u->filterByUID($comment->get_uid(), $conn);
                         $comment->set_username($u->get_username());
                     }
-                    array_push($comments,"message: success");
+                    echo json_encode("message: success");
                     echo json_encode($comments);
                 }
             } else {

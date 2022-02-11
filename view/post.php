@@ -160,12 +160,15 @@
                 url: action,
                 data: dataArray,
                 dataType: "json",
-                success: function(response) {
-                    console.log(response);
-                    if (response.message === "sucess") {
-                        $("#commentCount").text(response.length-1);
+                beforeSend: function(){
+                    $("#commentForm").trigger('reset');
+                },
+                success: function(response,array) {
+                    console.log(response,array);
+                    if (response === "sucess") {
+                        $("#commentCount").text(array.length);
                         $("#commentSection").empty();
-                        count.forEach(function(currentObject) {
+                        array.forEach(function(currentObject) {
                             $("#commentSection").append(
                                 `
                             <div class="d-flex bg-gray comment">
