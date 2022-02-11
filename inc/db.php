@@ -1,9 +1,11 @@
 <?php
 
-$server = "localhost";
+/*
+$server = "nebet.hu";
 $db = "c31h202121";
 $user = "kk";
 $password = "hymWuShlkcIXD5ud";
+*/
 
 $conn = new mysqli($server, $user, $password, $db);
 
