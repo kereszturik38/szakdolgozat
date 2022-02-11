@@ -8,28 +8,32 @@ $p = new Post();
 $c = new Comment();
 $u = new User();
 
-if(isset($_POST)){
+if (isset($_POST)) {
+    
+    if ($_POST["uid"] != "undefined") {
+        $timeBetween = time() - $_POST["timestamp"];
+        if($timeBetween < 80) die(json_encode("message: timeout_error, uid:" . $_POST["uid"] . ",time: " .$timeBetween));
 
-    $post_id = $_POST["post_id"];
-    $comment_text = $_POST["usercomment"];
-    $uploader_id = $_POST["uid"];
+        $post_id = $_POST["post_id"];
+        $comment_text = $_POST["usercomment"];
+        $uploader_id = $_POST["uid"];
 
-    if(strlen($comment_text) > 0){
-        if($c->leaveComment($post_id,$uploader_id,$comment_text,$conn)){
-            $comments = $c->commentsForPID($post_id,$conn);
-            if($comments){
-                foreach($comments as &$comment){
-                    $u->filterByUID($comment->get_uid(),$conn);
-                    $comment->set_username($u->get_username());
+        if (strlen($comment_text) > 0) {
+            if ($c->leaveComment($post_id, $uploader_id, $comment_text, $conn)) {
+                $comments = $c->commentsForPID($post_id, $conn);
+                if ($comments) {
+                    foreach ($comments as &$comment) {
+                        $u->filterByUID($comment->get_uid(), $conn);
+                        $comment->set_username($u->get_username());
+                    }
+                    array_push($comments,"message: success");
+                    echo json_encode($comments);
                 }
-                echo json_encode($comments);
+            } else {
+                die(json_encode("message: undefined_uid"));
             }
-        }else{
-            echo "error";
         }
-        
+    } else{
+        die(json_encode("message: undefined_uid"));
     }
 }
-
-
-?>

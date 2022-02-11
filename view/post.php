@@ -8,7 +8,7 @@
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
                     <span><a class="link-success text-decoration-none" href="#"><?php echo $u->get_username(); ?></a></span><br>
-                    <i class=<?php echo $icon;?>id="bookmarkIcon">
+                    <i class=<?php echo $icon; ?>id="bookmarkIcon">
                         <span class="badge badge-secondary bg-dark" id="bookmarkCount">
                             <?php echo $p->get_bookmark_count() ?>
                         </span>
@@ -17,34 +17,42 @@
 
                 <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
                 <div class="d-flex">
-                    <?php if (!$p->is_bookmarked($_SESSION["uid"], $p->get_post_id(), $conn)) { ?>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
-                            <i class="bi-bookmark em-1"></i>
-                            Add to bookmarks
-                        </button>
-                    <?php } else { ?>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button" id="removebookmarkButton">
-                            <i class="bi-bookmark em-1"></i>
-                            Remove from bookmarks
-                        </button>
-                    <?php } ?>
+                    <?php
+                    if (isset($_SESSION["loggedIn"])) {
+                        if ($is_bookmarked) { ?>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
+                                <i class="bi-bookmark em-1"></i>
+                                Add to bookmarks
+                            </button>
+                        <?php } else { ?>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" id="removebookmarkButton">
+                                <i class="bi-bookmark em-1"></i>
+                                Remove from bookmarks
+                            </button>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
 
         <div class="mt-5">
 
+            <?php
+            if (isset($_SESSION["loggedIn"])) {
+            ?>
+                <form method="post" action="ajax/comments_update.php" id="commentForm">
+                    <div class="mb-3">
+                        <label for="usercomment">
+                            <h5>Leave a comment</h5>
+                        </label>
+                        <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
+                        <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
+                    </div>
 
-            <form method="post" action="ajax/comments_update.php" id="commentForm">
-                <div class="mb-3">
-                    <label for="usercomment">
-                        <h5>Leave a comment</h5>
-                    </label>
-                    <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
-                    <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
-                </div>
-
-            </form>
+                </form>
+            <?php
+            }
+            ?>
         </div>
         <div class="mt-5">
             <h2>Comments <span class="badge badge-secondary bg-dark" id="commentCount"><?php echo $p->get_comment_count() ?></span></h2>
@@ -86,7 +94,8 @@
                 url: "ajax/bookmarks_update.php?id=" + <?php echo $p->get_post_id(); ?>,
                 data: {
                     post_id: <?php echo $p->get_post_id(); ?>,
-                    uid: <?php echo $_SESSION["uid"]; ?>,
+                    uid: <?php if (isset($_SESSION["uid"])) echo $_SESSION["uid"];
+                            else echo "undefined"; ?>,
                     bookmark: "set"
                 },
                 dataType: "text",
@@ -108,7 +117,8 @@
                 url: "ajax/bookmarks_update.php?id=" + <?php echo $p->get_post_id(); ?>,
                 data: {
                     post_id: <?php echo $p->get_post_id(); ?>,
-                    uid: <?php echo $_SESSION["uid"]; ?>,
+                    uid: <?php if (isset($_SESSION["uid"])) echo $_SESSION["uid"];
+                            else echo "undefined"; ?>,
                     bookmark: "unset"
                 },
                 dataType: "text",
@@ -137,7 +147,12 @@
             });
             dataArray.push({
                 name: 'uid',
-                value: <?php echo $_SESSION["uid"]; ?>
+                value: <?php if (isset($_SESSION["uid"])) echo $_SESSION["uid"];
+                        else echo "undefined"; ?>
+            });
+            dataArray.push({
+                name: 'timestamp',
+                value: <?php echo time(); ?>
             });
 
             $.ajax({
@@ -145,13 +160,14 @@
                 url: action,
                 data: dataArray,
                 dataType: "json",
-                success: function(count) {
-                    console.log(count);
-                    $("#commentCount").text(count.length);
-                    $("#commentSection").empty();
-                    count.forEach(function(currentObject){
-                        $("#commentSection").append(
-                            `
+                success: function(response) {
+                    console.log(response);
+                    if (response.message === "sucess") {
+                        $("#commentCount").text(response.length-1);
+                        $("#commentSection").empty();
+                        count.forEach(function(currentObject) {
+                            $("#commentSection").append(
+                                `
                             <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="#">
@@ -161,8 +177,13 @@
                             </div>
                         </div>
 `
-                        );
-                    });
+                            );
+                        });
+                    }
+
+                },
+                error: function(error) {
+                    alert(error);
                 }
 
             });

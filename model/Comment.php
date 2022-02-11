@@ -22,6 +22,20 @@ class Comment implements JsonSerializable
         $stmt->close();
     }
 
+    function removeComment($post_id,$uid,$text,$conn){
+        $stmt = $conn->prepare("INSERT INTO comment (uid,post_id,text) VALUES (?,?,?)");
+        $stmt->bind_param("iis", $uid,$post_id,$text);
+        if ($stmt->execute()) {
+            $stmt = $conn->prepare("UPDATE post SET comment_count = (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.post_id) WHERE post.post_id = ?");
+            $stmt->bind_param("i",$post_id);
+            if($stmt->execute()){
+                return true;
+            }
+            $stmt->close();
+        }
+        $stmt->close();
+    }
+
     function commentsForPIDAndUID($post_id, $uid,$conn)
     {
         $stmt = $conn->prepare("SELECT * FROM comment WHERE post_id LIKE ? AND uid LIKE ?");
