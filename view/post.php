@@ -55,7 +55,7 @@
                     foreach ($comments as $comment) {
                         $u->filterByUID($comment->get_uid(), $conn);
                 ?>
-                        <div class="d-flex bg-gray">
+                        <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="#">
                                     <h5><?php echo $u->get_username(); ?> <small class="text-muted"><i>Posted on <?php echo $comment->get_time_commented(); ?></i></small></h5>
@@ -152,7 +152,7 @@
                     count.forEach(function(currentObject){
                         $("#commentSection").append(
                             `
-                            <div class="d-flex bg-gray">
+                            <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="#">
                                     <h5>${currentObject.username}<small class="text-muted"><i>Posted on ${currentObject.time_commented}</i></small></h5>

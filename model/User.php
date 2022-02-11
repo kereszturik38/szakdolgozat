@@ -62,6 +62,21 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
+    function is_admin(int $uid,$conn){
+        $stmt = $conn->prepare("SELECT uid FROM admin WHERE uid=?");
+        $stmt->bind_param("i", $uid);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            if($result->num_rows > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 
 
     function get_uid()

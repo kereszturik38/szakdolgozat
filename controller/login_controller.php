@@ -14,6 +14,7 @@ if(isset($_POST["submit"])){
         $_SESSION["username"] = $user->get_username();
         $_SESSION["email"] = $user->get_email();
         $_SESSION["level"] = $user->get_level();
+        $_SESSION["admin"] = $user->is_admin($user->get_uid(),$conn);
         header("location: index.php");
     }else if($loginSuccess === 1){
         echo "<div class='alert alert-danger text-center' role='alert'>Invalid username or password combination.</div>";
