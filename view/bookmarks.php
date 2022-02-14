@@ -1,9 +1,18 @@
 <div class="card">
-    <!-- File type badge -->
-    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-image em-1"></i></div>
-    <!-- Post image-->
-    <img class="card-img" src="<?php echo $imgstr; ?>" alt=<?php echo $bookmark->get_title(); ?> data-postid=<?php echo $bookmark->get_post_id(); ?> />
-    <!-- Post details-->
+   <!-- File type badge -->
+   <?php if(preg_match("{image/*}",$bookmark->get_type())){ ?>
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-image em-1"></i></div>
+            <!-- Post image-->
+            <img class="card-img result" src="<?php echo $imgstr; ?>" alt=<?php echo $bookmark->get_title(); ?> data-postid=<?php echo $bookmark->get_post_id(); ?> />
+        <?php 
+        } else if(preg_match("{video/*}",$bookmark->get_type())){ ?>
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-play-btn em-1"></i></div>
+            <!-- Post image-->
+            <video class="card-img result" type=<?php echo $bookmark->get_type(); ?> alt=<?php echo $bookmark->get_title(); ?> data-postid=<?php echo$bookmark->get_post_id(); ?>>
+                <source src="<?php echo $imgstr; ?>" />
+            </video>
+        <?php } ?>
+        <!-- Post details-->
     <div class="card-body">
         <div class="text-center">
             <!-- Title,uploader,etc-->

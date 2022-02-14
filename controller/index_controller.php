@@ -13,7 +13,7 @@ if (isset($_GET["page"])) {
         $topImages = array();  
         while ($row = $results->fetch_assoc()) {
             $p->filterByPID($row["post_id"],$conn);
-            $imgstr = fetch_image($p);
+            $imgstr = fetch_file($p);
             array_push($topImages,clone $p);
         }
         include "view/homepage.php";
