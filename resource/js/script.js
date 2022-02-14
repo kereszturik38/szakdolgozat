@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('[data-bs-toggle="popover"]').popover();
+
     $(document).on("click",".enlargePost",function(e) {
         e.preventDefault();
         if($(e.target).is("img")){
@@ -18,6 +20,7 @@ $(document).ready(function() {
     });
 
     $(document).on("click","#shareBtn",function(e){
-        alert($(e.target).attr('data-link'));
+        let data = $(e.target).attr("data-link");
+        navigator.clipboard.writeText(data);
     })
 });
