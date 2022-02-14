@@ -1,11 +1,6 @@
 <?php
 
-/*
-$server = "localhost";
-$db = "c31h202121";
-$user = "kk";
-$password = "hymWuShlkcIXD5ud";
-*/
+
 $server = "localhost";
 $db = "c31h202121";
 $user = "kk";
