@@ -7,7 +7,7 @@ if(isset($_POST["submit"])){
     $email = $_POST["email"];
 
     $user = new User();
-    $loginSuccess = $user->verify($username,$password,$conn);
+    $loginSuccess = $user->verify($username,$email,$password,$conn);
     if($loginSuccess === 0){
         $_SESSION["loggedIn"] = true;
         $_SESSION["uid"] = $user->get_uid();

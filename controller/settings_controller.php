@@ -1,6 +1,6 @@
 <?php
 
-session_unset();
 
+include "view/settings.php";
 
 ?>

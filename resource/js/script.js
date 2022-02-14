@@ -16,4 +16,8 @@ $(document).ready(function() {
         src = $(e.target).attr("data-postid");
         window.location.href = "index.php?page=post&id=" + src;
     });
+
+    $(document).on("click","#shareBtn",function(e){
+        alert($(e.target).attr('data-link'));
+    })
 });

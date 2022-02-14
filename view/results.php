@@ -21,6 +21,7 @@
                 <h6 class="fw-light"><?php echo $row["username"] ?></h6>
                 <i class="bi-card-text em-1"></i><?php echo $row["comment_count"] ?>
                 <i class="bi-bookmark em-1"></i><?php echo $row["bookmark_count"] ?>
+                <i class="bi-share" id="shareBtn" data-link=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post?id=" . $row["post_id"]; ?>></i>
             </div>
         </div>
     </div>

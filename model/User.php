@@ -37,10 +37,10 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
-    function verify($username, $password, $conn)
+    function verify($username, $email,$password, $conn)
     {
-        $stmt = $conn->prepare("SELECT uid,username,email,level FROM user WHERE username LIKE ? AND password LIKE ?");
-        $stmt->bind_param("ss", $username, $password);
+        $stmt = $conn->prepare("SELECT uid,username,email,level FROM user WHERE username LIKE ? AND email LIKE ? AND password LIKE ?");
+        $stmt->bind_param("sss", $username, $email,$password);
 
 
         if ($stmt->execute()) {

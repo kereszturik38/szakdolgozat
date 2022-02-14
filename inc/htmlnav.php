@@ -19,6 +19,10 @@
                             <a class="nav-link" href="index.php?page=settings">Settings</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=logout">Logout</a>
+                        </li>
+
                     <?php } ?>
                 </ul>
             </div>

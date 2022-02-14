@@ -50,9 +50,9 @@ class Post implements JsonSerializable
         if ($stmt->execute()) {
             $this->post_id = $stmt->insert_id;
             $this->filterByPID($this->post_id, $conn);
-            //echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
+            return 0;
         } else {
-            echo "upload failure";
+            return 1;
         }
         $stmt->close();
     }
