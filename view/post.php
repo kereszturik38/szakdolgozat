@@ -50,6 +50,7 @@
                     </div>
 
                 </form>
+                <p class="text-danger d-none" id="commentError">The comment field can't be empty</p>
             <?php
             }
             ?>
@@ -134,8 +135,16 @@
             })
         });
 
+        $("#commentForm").keyup(function(e) {
+            $("#commentError").addClass("d-none");
+        });
+
         $("#commentForm").submit(function(e) {
             e.preventDefault();
+            if($("#usercomment").text().length === 0){
+                $("#commentError").removeClass("d-none");
+                return;
+            }
 
             let form = $(this);
             let action = form.attr('action');
@@ -150,10 +159,6 @@
                 value: <?php if (isset($_SESSION["uid"])) echo $_SESSION["uid"];
                         else echo "undefined"; ?>
             });
-            dataArray.push({
-                name: 'timestamp',
-                value: <?php echo time(); ?>
-            });
 
             $.ajax({
                 type: "POST",
@@ -163,9 +168,8 @@
                 beforeSend: function(){
                     $("#commentForm").trigger('reset');
                 },
-                success: function(response,array) {
-                    console.log(response,array);
-                    if (response === "sucess") {
+                success: function(array) {
+                    
                         $("#commentCount").text(array.length);
                         $("#commentSection").empty();
                         array.forEach(function(currentObject) {
@@ -182,11 +186,11 @@
 `
                             );
                         });
-                    }
 
                 },
                 error: function(error) {
-                    alert(error);
+                    alert("Something has gone wrong");
+                    console.log(error);
                 }
 
             });
