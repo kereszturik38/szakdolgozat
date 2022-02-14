@@ -43,6 +43,7 @@ class Post implements JsonSerializable
 
     function upload(int $uid, string $title, int $visible, string $type, $conn)
     {
+        if($type === "") return;
         $stmt = $conn->prepare("INSERT INTO post(post.uid,title,visible,type) VALUES (?,?,?,?)");
         $stmt->bind_param("isis", $uid, $title, $visible, $type);
 

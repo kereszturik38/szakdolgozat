@@ -1,10 +1,19 @@
 
     <div class="card">
         <!-- File type badge -->
-        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-image em-1"></i></div>
-        <!-- Post image-->
-        <img class="card-img result" src="<?php echo $imgstr; ?>" alt=<?php echo $row["title"]; ?> data-postid=<?php echo $row["post_id"]; ?> />
+        <?php if(preg_match("{image/*}",$row["type"])){ ?>
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-image em-1"></i></div>
+            <!-- Post image-->
+            <img class="card-img result" src="<?php echo $imgstr; ?>" alt=<?php echo $row["title"]; ?> data-postid=<?php echo $row["post_id"]; ?> />
+        <?php 
+        } else if(preg_match("{video/*}",$row["type"])){ ?>
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><i class="bi-play-btn em-1"></i></div>
+            <!-- Post image-->
+            <video class="card-img result" type=<?php echo $row["type"]; ?> alt=<?php echo $row["title"]; ?> data-postid=<?php echo $row["post_id"]; ?>>
+                <source src="<?php echo $imgstr; ?>" />
+            </video>
         <!-- Post details-->
+        <?php } ?>
         <div class="card-body">
             <div class="text-center">
                 <!-- Title,uploader,etc-->

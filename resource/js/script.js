@@ -1,7 +1,14 @@
 $(document).ready(function() {
 
     $(document).on("click",".enlargePost",function(e) {
-        src = $(e.target).attr("src");
+        e.preventDefault();
+        if($(e.target).is("img")){
+            src = $(e.target).attr("src");
+        }else if($(e.target).is("video")){
+            src = $('source').attr("src");
+        }
+        
+        
         window.open(src);
     });
 

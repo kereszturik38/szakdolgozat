@@ -11,13 +11,34 @@ if (isset($_POST["submit"])) {
     $fileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     $public = isset($_POST["publicCheck"]) ? 1 : 0;
 
-    $uploadType = "image/" . $fileType;
+    $IMAGE_TYPES = array("png","jpg","bmp");
+    $VIDEO_TYPES = array("mp4","ogg","mov");
+
+
+
+    $uploadOK = 1;
+    $uploadType="";
+    if(in_array($fileType,$IMAGE_TYPES)){
+        $uploadType = "image/" . $fileType;
+        $realImage = @is_array(getimagesize($_FILES["fileToUpload"]["tmp_name"]));
+        if ($realImage === false) {
+            echo "<div class='alert alert-danger text-center' role='alert'>Upload failed. File is not an image</div>";
+            $uploadOK = 0;
+        }
+    }
+    else if(in_array($fileType,$VIDEO_TYPES)){
+        $uploadType = "video/" . $fileType;
+    }
+    else{
+        echo "<div class='alert alert-danger text-center' role='alert'>Upload failed. File type is not supported.</div>";
+        $uploadOK = 0;
+    }
 
 
     $p = new Post();
     $p->upload($_SESSION["uid"], $title, $public, $uploadType, $conn);
 
-    $uploadOK = 1;
+    
 
     $upload_dir = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/";
     if(is_dir($upload_dir)){
@@ -25,12 +46,7 @@ if (isset($_POST["submit"])) {
     }
     $upload_target = $upload_dir .  $p->get_post_id() . "." . $fileType;
 
-
-    $realImage = @is_array(getimagesize($_FILES["fileToUpload"]["tmp_name"]));
-    if ($realImage === false) {
-        echo "<div class='alert alert-danger text-center' role='alert'>Upload failed. File is not an image</div>";
-        $uploadOK = 0;
-    }
+    
     if (file_exists($upload_target)) {
         echo "Sorry, file already exists.";
         $uploadOK = 0;

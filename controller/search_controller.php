@@ -37,7 +37,7 @@ include "inc/searchfield.php";
                 while ($row = $resultsToShow->fetch_assoc()) {
 
                     $p->filterByPID($row["post_id"],$conn);
-                    $imgstr = fetch_image($p);
+                    $imgstr = fetch_file($p);
                     include "view/results.php";
                 }
             } else{

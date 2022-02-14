@@ -2,8 +2,14 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0 enlargePost" src=<?php echo $imgstr ?> alt=<?php echo $p->get_title(); ?> />
-            </div>
+                <?php if(preg_match("{image/*}",$p->get_type())) { ?>
+                    <img class="card-img-top mb-5 mb-md-0 enlargePost" src=<?php echo $imgstr ?> alt=<?php echo $p->get_title(); ?> />
+                <?php }else if(preg_match("{video/*}",$p->get_type())){ ?>
+                    <video class="card-img-top mb-5 mb-md-0 enlargePost">
+                        <source src=<?php echo $imgstr ?> />
+                    </video>
+                <?php } ?>
+             </div>
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
@@ -19,7 +25,7 @@
                 <div class="d-flex">
                     <?php
                     if (isset($_SESSION["loggedIn"])) {
-                        if ($is_bookmarked) { ?>
+                        if (!$is_bookmarked) { ?>
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
                                 <i class="bi-bookmark em-1"></i>
                                 Add to bookmarks

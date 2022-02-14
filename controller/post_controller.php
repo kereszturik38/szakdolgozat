@@ -17,14 +17,14 @@ if(isset($_GET["id"])){
     
     $comments = $c->commentsForPID($_GET["id"],$conn);
     
-    $imgstr = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/" . $p->get_post_id() . "." . str_replace("image/","",$p->get_type());
+    $imgstr = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/" . $p->get_post_id() . "." . preg_replace("{image/|video/}","",$p->get_type());
 
     if(isset($_SESSION["uid"])){
         $is_bookmarked = $p->is_bookmarked($_SESSION["uid"],$p->get_post_id(),$conn);
     }else{
-
+        $is_bookmarked = false;
     }
-    $is_bookmarked = false;
+    
     
     $icon = $is_bookmarked ? 'bi-bookmark-fill ' : 'bi-bookmark ';
 
