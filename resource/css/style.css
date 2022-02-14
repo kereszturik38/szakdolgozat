@@ -18,7 +18,26 @@ body{
 
 .card-img-top:hover {opacity: 0.7;}
 
+.carousel-item img:hover{
+    cursor:pointer;
+    opacity: 0.7;
+    transition:0.3s;
+}
+
+.carousel-item video:hover{
+    cursor:pointer;
+    opacity: 0.7;
+    transition:0.3s;
+}
+
 .carousel img {
+    width: 600px;
+    height:700px;
+    object-fit: contain;
+    max-width: none;
+  }
+
+  .carousel video {
     width: 600px;
     height:700px;
     object-fit: contain;
