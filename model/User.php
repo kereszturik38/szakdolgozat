@@ -19,8 +19,10 @@ class User implements JsonSerializable
                 $this->username = $row["username"];
                 $this->email = $row["email"];
                 $this->level = $row["level"];
+                
             }
-        }
+            return true;
+        }else{ return false; }
         $stmt->close();
     }
 

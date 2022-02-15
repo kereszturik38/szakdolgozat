@@ -3,7 +3,6 @@ $(document).ready(function() {
     
     $('[data-bs-toggle="popover"]').popover();
 
-   
 
     $(document).on("click",".enlargePost",function(e) {
         e.preventDefault();

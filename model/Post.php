@@ -36,7 +36,8 @@ class Post implements JsonSerializable
                 $this->visible = $row["visible"];
                 $this->type = $row["type"];
             }
-        }
+            return true;
+        }else{ return false; }
         $stmt->close();
     }
 
@@ -63,9 +64,9 @@ class Post implements JsonSerializable
         $stmt->bind_param("i", $post_id);
 
         if ($stmt->execute()) {
-            //echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
+            return 0;
         } else {
-            //echo "<div class='alert alert-danger text-center' role='alert'>Upload failed.</div>";
+            return 1;
         }
         $stmt->close();
     }
