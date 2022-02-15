@@ -21,7 +21,7 @@
             <i class="bi-card-text em-1"></i><?php echo $row["comment_count"] ?>
             <i class="bi-bookmark em-1"></i><?php echo $row["bookmark_count"] ?>
             <a tabindex="0" role="button" id="shareBtn" data-bs-toggle="popover" data-bs-content="Copied to clipboard" data-bs-trigger="focus" data-clipboard-text=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>>
-                <i class="bi-share" data-clipboard-text=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>></i>
+                <i class="bi-share" data-clipboard-text=<?php echo $_SERVER["SERVER_NAME"] . "/kevin/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>></i>
             </a>
         </div>
     </div>
