@@ -9,7 +9,7 @@
         <div class="form-group">
         <label for="fileToUpload">File</label>
         <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"/>
-        <small>Note: your file upload limit is 5mb</small>
+        <small>Note: your file upload limit is <?php echo $UPLOAD_LIMIT_BY_LEVEL[$_SESSION["level"]]/1000000; ?></small>
         </div>
 
         <div class="form-check">

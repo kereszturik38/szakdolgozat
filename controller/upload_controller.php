@@ -1,7 +1,11 @@
 <?php
 include "model/Post.php";
 
-
+$UPLOAD_LIMIT_BY_LEVEL = array(
+    "1" => 5000000, // 5mb
+    "2" => 10000000, // 10mb
+    "3" => 20000000 // 20mb
+);
 
 if (isset($_POST["submit"])) {
 
@@ -47,6 +51,13 @@ if (isset($_POST["submit"])) {
             echo "Sorry, file already exists.";
             $uploadOK = 0;
         }
+
+        if ($_FILES["fileToUpload"]["size"] > $UPLOAD_LIMIT_BY_LEVEL[$_SESSION["level"]]) {
+            echo "Sorry, your file is too large.";
+            echo "your file size: " . $_FILES["fileToUpload"]["size"];
+            echo "your upload limit is: " . $UPLOAD_LIMIT_BY_LEVEL[$_SESSION["level"]];
+            $uploadOK = 0;
+          } 
 
         if ($uploadOK === 0) {
             echo "<div class='alert alert-danger text-center' role='alert'>Upload failed.</div>";
