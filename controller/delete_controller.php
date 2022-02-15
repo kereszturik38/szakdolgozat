@@ -12,15 +12,16 @@
 
         if($p->filterByPID($pid,$conn) && $u->filterByUID($request_uid,$conn)){
 
-            if($p->get_post_uid() != $request_uid || !$u->is_admin($request_uid,$conn)){
-                echo "<h1 class='alert alert-danger'>You must be the original uploader to delete this post</h1>";
-            }else{
+            if($p->get_post_uid() === $request_uid || $u->is_admin($request_uid,$conn)){
                 include "view/delete_form.php";
-
+            }else{
+                echo "<h3 class='alert alert-danger'>You must be the original uploader to delete this file.</h3>";
             }
+        }else{
+            echo "<h3 class='alert alert-danger'>Database error</h3>";
         }
     }else{
-        echo "<h1 class='alert alert-danger'>You must be logged in to delete posts</h1>";
+        echo "<h3 class='alert alert-danger'>You must be logged in to delete posts</h3>";
     }
 
 ?>
