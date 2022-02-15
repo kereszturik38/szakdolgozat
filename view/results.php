@@ -20,8 +20,8 @@
             <h6 class="fw-light"><?php echo $row["username"] ?></h6>
             <i class="bi-card-text em-1"></i><?php echo $row["comment_count"] ?>
             <i class="bi-bookmark em-1"></i><?php echo $row["bookmark_count"] ?>
-            <a tabindex="0" role="button" id="shareBtn" data-bs-toggle="popover" data-bs-content="Copied to clipboard" data-bs-trigger="focus">
-                <i class="bi-share" data-link=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>></i>
+            <a tabindex="0" role="button" id="shareBtn" data-bs-toggle="popover" data-bs-content="Copied to clipboard" data-bs-trigger="focus" data-clipboard-text=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>>
+                <i class="bi-share" data-clipboard-text=<?php echo $_SERVER["SERVER_NAME"] . "/szakdolgozat/index.php?page=post&id=" . $row["post_id"]; ?>></i>
             </a>
         </div>
     </div>
