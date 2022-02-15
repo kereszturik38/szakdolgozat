@@ -1,5 +1,5 @@
 <div id="status"></div>
-<div class="container">
+<div class="container w-50">
     <h3>Are you sure you wish to delete this post?</h3>
     <form id="deleteForm">
         <div class="form-group">
@@ -23,7 +23,7 @@
                 uid: <?php echo $request_uid; ?>
             },
             success: function(e){
-                
+
             }
 
         })
