@@ -21,7 +21,7 @@
                     </i>
                 </div>
 
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                <p class="lead">Moses servus meus mortuus est surge et transi Iordanem istum tu et omnis populus tecum in terram quam ego dabo filiis Israhel confortare igitur et esto robustus valde ut custodias et facias omnem legem quam praecepit tibi Moses servus meus ne declines ab ea ad dextram vel ad sinistram ut intellegas cuncta quae agis</p>
                 <div class="d-flex">
                     <?php
                     if (isset($_SESSION["loggedIn"])) {

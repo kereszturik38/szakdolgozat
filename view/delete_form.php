@@ -1,6 +1,7 @@
-<div id="status"></div>
+<div class="alert alert-info d-none" id="status"></div>
 <div class="container w-50">
     <h3>Are you sure you wish to delete this post?</h3>
+    <media src=<?php echo fetch_file($p); ?> class="w-50" />
     <form id="deleteForm">
         <div class="form-group">
             <label for="password">Enter your password to confirm deletion</label>
@@ -23,7 +24,14 @@
                 uid: <?php echo $request_uid; ?>
             },
             success: function(e){
+                $("#status").removeClass("d-none").text("Successfully deleted post.Redirecting...");
+                setTimeout(function(){
+                    window.location.href="index.php";
+                },5000);
 
+            },
+            error: function(e){
+                console.log(e);
             }
 
         })
