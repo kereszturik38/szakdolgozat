@@ -14,7 +14,7 @@
 
         if($p->filterByPID($pid,$conn) && $u->filterByUID($request_uid,$conn)){
 
-            if($p->get_post_uid() === $request_uid || $u->is_admin($request_uid,$conn)){
+            if(($p->get_post_uid() == $request_uid) || ($u->is_admin($request_uid,$conn))){
                 if(delete_files($pid,$p->get_post_uid(),$conn)){
                     $p->delete($pid,$conn);
                     echo "Success";

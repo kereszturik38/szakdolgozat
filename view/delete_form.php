@@ -26,8 +26,8 @@
             success: function(e){
                 $("#status").removeClass("d-none").text("Successfully deleted post.Redirecting...");
                 setTimeout(function(){
-                    window.location.href="index.php";
-                },5000);
+                    //window.location.href="index.php";
+                },3000);
 
             },
             error: function(e){
