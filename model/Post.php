@@ -71,12 +71,12 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByTitle(string $title, $conn)
+    function filterByTitle(string $title,int $offset,$conn)
     {
         
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ?");
-        $stmt->bind_param("s", $title);
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? LIMIT ?,20");
+        $stmt->bind_param("si", $title,$offset);
 
         if ($stmt->execute()) {
             $results = $stmt->get_result();
@@ -85,15 +85,31 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByType(string $title, string $type, $conn)
+    function filterByType(string $title, string $type,int $offset, $conn)
     {
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ?");
-        $stmt->bind_param("ss", $title, $type);
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? LIMIT ?,20");
+        $stmt->bind_param("ssi", $title, $type,$offset);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
         }
         $stmt->close();
+    }
+
+    function get_number_of_pages(string $title,$conn,$type = "%"){
+        $pages = 1;
+        $stmt = $conn->prepare("SELECT COUNT(post_id) as 'pages' from post WHERE title=? AND type=?");
+        $stmt->bind_param("ss",$title,$type);
+        if ($stmt->execute()){
+            $result = $stmt->get_result()->fetch_assoc();
+            $pages = ceil($result["pages"]/20) + 1;
+            if($stmt->get_result() % 20 != 0){
+                $pages += 1;
+             }
+        }else{
+            die();
+        }
+        return $pages;
     }
 
     function get_popular(int $limit, $conn)
