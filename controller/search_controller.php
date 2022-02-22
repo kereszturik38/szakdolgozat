@@ -20,25 +20,28 @@ include "inc/searchfield.php";
             $searchRaw = $_GET["search"];
             $search = "%" . $_GET["search"] . "%";
             $select = $_GET["select"];
+
             if(isset($_GET["pageNum"])){
                 $pageNum = $_GET["pageNum"];
             }else{
                 $pageNum=0;
                
             }
-            $offset = $pageNum * 5;
+            $postsPerPage = 5;
+
+            $offset = $pageNum * $postsPerPage;
 
             switch ($select) {
                 case "Title":
-                    $numberOfPages = $p->get_number_of_pages($search,$conn);
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn);
                     $resultsToShow = $p->filterByTitle($search,$offset,$conn);
                     break;
                 case "Image":
-                    $numberOfPages = $p->get_number_of_pages($search,$conn,"image/%");
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"image/%");
                     $resultsToShow = $p->filterByType($search,"image/%",$offset, $conn);
                     break;
                 case "Video":
-                    $numberOfPages = $p->get_number_of_pages($search,$conn,"video/%");
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"video/%");
                     $resultsToShow = $p->filterByType($search,"video/%",$offset, $conn);
                     break;
             }
@@ -51,6 +54,7 @@ include "inc/searchfield.php";
                     $imgstr = fetch_file($p);
                     include "view/results.php";
                 }
+                echo "</div>";
                 include "inc/pagination.php";
             } else{
                 include "view/noresults.php";
