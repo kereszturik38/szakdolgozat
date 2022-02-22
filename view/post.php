@@ -146,7 +146,7 @@
 
         $("#commentForm").submit(function(e) {
             e.preventDefault();
-            if($("#usercomment").text().length === 0){
+            if($("#usercomment").val().length === 0){
                 $("#commentError").removeClass("d-none");
                 return;
             }

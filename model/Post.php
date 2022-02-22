@@ -71,12 +71,12 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByTitle(string $title,int $offset,$conn)
+    function filterByTitle(string $title,int $offset,int $postsPerPage,$conn)
     {
         
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? LIMIT ?,5");
-        $stmt->bind_param("si", $title,$offset);
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? LIMIT ?,?");
+        $stmt->bind_param("sii", $title,$offset,$postsPerPage);
 
         if ($stmt->execute()) {
             $results = $stmt->get_result();
@@ -85,10 +85,10 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByType(string $title, string $type,int $offset, $conn)
+    function filterByType(string $title, string $type,int $offset, int $postsPerPage,$conn)
     {
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? LIMIT ?,5");
-        $stmt->bind_param("ssi", $title, $type,$offset);
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? LIMIT ?,?");
+        $stmt->bind_param("ssii", $title, $type,$offset,$postsPerPage);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;

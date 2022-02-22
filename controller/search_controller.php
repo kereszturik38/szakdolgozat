@@ -27,22 +27,22 @@ include "inc/searchfield.php";
                 $pageNum=0;
                
             }
-            $postsPerPage = 5;
+            $postsPerPage = 6;
 
             $offset = $pageNum * $postsPerPage;
 
             switch ($select) {
                 case "Title":
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn);
-                    $resultsToShow = $p->filterByTitle($search,$offset,$conn);
+                    $resultsToShow = $p->filterByTitle($search,$offset,$postsPerPage,$conn);
                     break;
                 case "Image":
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"image/%");
-                    $resultsToShow = $p->filterByType($search,"image/%",$offset, $conn);
+                    $resultsToShow = $p->filterByType($search,"image/%",$offset, $postsPerPage,$conn);
                     break;
                 case "Video":
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"video/%");
-                    $resultsToShow = $p->filterByType($search,"video/%",$offset, $conn);
+                    $resultsToShow = $p->filterByType($search,"video/%",$offset, $postsPerPage,$conn);
                     break;
             }
             if ($resultsToShow && $resultsToShow->num_rows > 0) {
