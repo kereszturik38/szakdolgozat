@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand"><i class="bi-images"></i></a>
+            <a class="navbar-brand"><img src="resource/favicon-32x32.png"></img></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -13,7 +13,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=search">Search</a>
                     </li>
-                    <?php if (isset($_SESSION["loggedIn"])) {  ?>
+                    <?php if (isset($_SESSION["loggedIn"])):  ?>
 
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=settings">Settings</a>
@@ -23,13 +23,13 @@
                             <a class="nav-link" href="index.php?page=logout">Logout</a>
                         </li>
 
-                    <?php } ?>
+                    <?php endif ?>
                 </ul>
             </div>
         </div>
         <div class="d-flex align-items-center mx-sm-auto">
 
-            <?php if (isset($_SESSION["loggedIn"])) { ?>
+            <?php if (isset($_SESSION["loggedIn"])){ ?>
 
                 <a class="btn btn-primary mx-3" href="index.php?page=bookmarks">
                     Bookmarks <span class="badge badge-light"> <i class="bi-bookmark"></i> </span>

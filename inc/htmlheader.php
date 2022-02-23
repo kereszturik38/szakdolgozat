@@ -8,6 +8,8 @@
         <title>Image uploading site</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="resource/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="resource/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="resource/favicon-16x16.png">
         <!-- JQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <!-- Bootstrap -->
