@@ -16,7 +16,6 @@ include "inc/searchfield.php";
 
 
             $p = new Post();
-
             $searchRaw = $_GET["search"];
             $search = "%" . $_GET["search"] . "%";
             $select = $_GET["select"];
@@ -44,6 +43,11 @@ include "inc/searchfield.php";
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"video/%");
                     $resultsToShow = $p->filterByType($search,"video/%",$offset, $postsPerPage,$conn);
                     break;
+                case "Uploaded by":
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn);
+                    $resultsToShow = $p->filterByUploader($search,$offset,$postsPerPage,$conn);
+                    break;
+                
             }
             if ($resultsToShow && $resultsToShow->num_rows > 0) {
 

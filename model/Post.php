@@ -75,7 +75,7 @@ class Post implements JsonSerializable
     {
         
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("sii", $title,$offset,$postsPerPage);
 
         if ($stmt->execute()) {
@@ -87,8 +87,18 @@ class Post implements JsonSerializable
 
     function filterByType(string $title, string $type,int $offset, int $postsPerPage,$conn)
     {
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("ssii", $title, $type,$offset,$postsPerPage);
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            return $results;
+        }
+        $stmt->close();
+    }
+    function filterByUploader(string $username="%",int $offset, int $postsPerPage,$conn)
+    {
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND VISIBLE=1 LIMIT ?,?");
+        $stmt->bind_param("sii", $username,$offset,$postsPerPage);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;

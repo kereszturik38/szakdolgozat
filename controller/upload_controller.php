@@ -40,7 +40,7 @@ if (isset($_POST["submit"])) {
 
 
     $p = new Post();
-    if ($p->upload($_SESSION["uid"], $title, $public, $uploadType, $conn) === 0) {
+    if ($uploadOK == 1 && $p->upload($_SESSION["uid"], $title, $public, $uploadType, $conn) === 0) {
 
         $upload_dir = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/";
         if (is_dir($upload_dir)) {
@@ -65,8 +65,7 @@ if (isset($_POST["submit"])) {
         } else if ($uploadOK === 1) {
             mkdir($upload_dir);
             if (@move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $upload_target)) {
-                echo "<div class='alert alert-success text-center' role='success'>Upload successful.</div>";
-                echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+                header('Location: index.php?page=post&id=' . $p->get_post_id());
             } else {
                 $p->delete($p->get_post_id(), $conn);
                 unlink($upload_dir);
@@ -75,7 +74,7 @@ if (isset($_POST["submit"])) {
         }
     } else {
         echo "<div class='alert alert-danger text-center' role='alert'>Upload failed." . $errorMsg . "</div>";
-        $p->delete($p->get_post_id(), $conn);
+        //$p->delete($p->get_post_id(), $conn);
     }
 }
 

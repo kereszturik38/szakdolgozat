@@ -13,7 +13,7 @@
         </div>
 
         <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="publicCheck" name="publicCheck" value="public" checked required>
+        <input type="checkbox" class="form-check-input" id="publicCheck" name="publicCheck" value="public" checked>
         <label class="form-check-label" for="publicCheck">This post is public</label>
         </div>
 

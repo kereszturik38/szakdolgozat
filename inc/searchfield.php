@@ -11,7 +11,6 @@
                     <option>Image</option>
                     <option>Video</option>
                     <option>Uploaded by</option>
-                    <option>User</option>
                 </select>
                 <button type="submit" class="btn btn-lg btn-success">
                 <i class=" bi-search em-1"></i>
