@@ -16,10 +16,12 @@ $postsPerPage = 6;
 $offset = $pageNum * $postsPerPage;
 
 if(isset($_SESSION["uid"])){
+    $uid = $_SESSION["uid"];
+    $numberOfPages = $p->get_number_of_pages(6,$conn,$uid="2331");
     $bookmarks = $p->get_bookmarks($_SESSION["uid"],$offset,$postsPerPage,$conn);
-    $uid = strval($_SESSION["uid"]);
-    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$uid=$uid);
-    echo strval($_SESSION["uid"]);
+    
+    
+    echo $numberOfPages;
     echo "<div class='d-grid gap-3'>";
     echo "<div class='container px-4 px-lg-5 my-5'>";
     echo "<div class='row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center'>";
@@ -30,9 +32,9 @@ if(isset($_SESSION["uid"])){
     }
     
     echo "</div>";
+    echo "</div>";
+    echo "</div>";
     include "inc/pagination.php";
-    echo "</div>";
-    echo "</div>";
     
 }
 
