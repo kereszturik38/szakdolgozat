@@ -31,7 +31,7 @@
 
             <?php if (isset($_SESSION["loggedIn"])){ ?>
 
-                <a class="btn btn-primary mx-3" href="index.php?page=bookmarks">
+                <a class="btn btn-primary mx-3" href="index.php?page=bookmarks&pageNum=0">
                     Bookmarks <span class="badge badge-light"> <i class="bi-bookmark"></i> </span>
                 </a>
 

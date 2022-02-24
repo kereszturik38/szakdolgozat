@@ -106,9 +106,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_pages($postsPerPage,string $title,$conn,$type = "%"){
-        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ?");
-        $stmt->bind_param("iss",$postsPerPage,$title,$type);
+    function get_number_of_pages($postsPerPage,$conn,string $title="%",$uid="%",$type = "%"){
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ?");
+        $stmt->bind_param("isss",$postsPerPage,$title,$type,$uid);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];
@@ -130,13 +130,13 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_bookmarks(int $uid, $conn)
+    function get_bookmarks(int $uid,int $offset,int $postsPerPage,$conn)
     {
 
         $bookmarks = array();
 
-        $stmt = $conn->prepare("SELECT post_id FROM bookmarks WHERE uid = ?");
-        $stmt->bind_param("i", $uid);
+        $stmt = $conn->prepare("SELECT post_id FROM bookmarks WHERE uid = ? LIMIT ?,?");
+        $stmt->bind_param("iii", $uid,$offset,$postsPerPage);
 
         if ($stmt->execute()) {
             $results = $stmt->get_result();

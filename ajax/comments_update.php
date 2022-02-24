@@ -13,7 +13,7 @@ if (isset($_POST)) {
     if ($_POST["uid"] != "undefined") {
 
         $post_id = $_POST["post_id"];
-        $comment_text = $_POST["usercomment"];
+        $comment_text = htmlspecialchars($_POST["usercomment"]);
         $uploader_id = $_POST["uid"];
 
         if (strlen($comment_text) > 0) {

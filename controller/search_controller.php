@@ -32,19 +32,19 @@ include "inc/searchfield.php";
 
             switch ($select) {
                 case "Title":
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn);
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$title=$search);
                     $resultsToShow = $p->filterByTitle($search,$offset,$postsPerPage,$conn);
                     break;
                 case "Image":
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"image/%");
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$title=$search,$type="image/%");
                     $resultsToShow = $p->filterByType($search,"image/%",$offset, $postsPerPage,$conn);
                     break;
                 case "Video":
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn,"video/%");
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$title=$search,$type="video/%");
                     $resultsToShow = $p->filterByType($search,"video/%",$offset, $postsPerPage,$conn);
                     break;
                 case "Uploaded by":
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$search,$conn);
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$title=$search);
                     $resultsToShow = $p->filterByUploader($search,$offset,$postsPerPage,$conn);
                     break;
                 
