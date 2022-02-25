@@ -106,9 +106,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_pages($postsPerPage,$conn,string $title="%",$type="%",$uid="%"){
+    function get_number_of_pages($postsPerPage,$conn,$title="%",$type="%",$user="%"){
         $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ?");
-        $stmt->bind_param("isss",$postsPerPage,$title,$type,$uid);
+        $stmt->bind_param("isss",$postsPerPage,$title,$type,$user);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];

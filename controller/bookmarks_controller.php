@@ -16,8 +16,8 @@ $postsPerPage = 6;
 $offset = $pageNum * $postsPerPage;
 
 if(isset($_SESSION["uid"])){
-    $uid = $_SESSION["uid"];
-    $numberOfPages = $p->get_number_of_pages(6,$conn,$uid="2331");
+    $uid = strval($_SESSION["uid"]);
+    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$user=$uid);
     $bookmarks = $p->get_bookmarks($_SESSION["uid"],$offset,$postsPerPage,$conn);
     
     
