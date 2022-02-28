@@ -5,7 +5,7 @@
     <form id="deleteForm">
         <div class="form-group">
             <label for="password">Enter your password to confirm deletion</label>
-            <input type="password" id="password" name="password" class="form-control" required/>
+            <input type="password" id="password" name="password" class="form-control" required maxlength="32"/>
         </div>
 
         <button class="btn btn-primary mt-5" type="submit" name="submit" value="submit">Yes,delete this post</button>

@@ -1,7 +1,6 @@
 <?php
     include "../inc/db.php";
     include "../model/User.php";
-    include "../inc/update_session.php";
 
     $u = new User();
 
@@ -15,8 +14,7 @@
 
             if($u->get_username() === $olduser){
                 if($u->set_username($request_uid,$conn,$newuser)){
-                    update_session("username",$newuser);
-                    echo "Success";
+                    echo json_encode($response);
                 }
                 }else{
                     die("Username change failure");

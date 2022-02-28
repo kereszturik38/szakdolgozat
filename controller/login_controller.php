@@ -2,9 +2,9 @@
 include "model/User.php";
 
 if(isset($_POST["submit"])){
-    $username = $_POST["username"];
+    $username = htmlspecialchars($_POST["username"]);
     $password = md5($_POST["password"]);
-    $email = $_POST["email"];
+    $email = htmlspecialchars($_POST["email"]);
 
     $user = new User();
     $loginSuccess = $user->verify($username,$email,$password,$conn);

@@ -3,17 +3,17 @@
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="form-control" required/>
+            <input type="text" id="username" name="username" class="form-control" required maxlength="30"/>
         </div>
 
         <div class="form-group">
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required/>
+            <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required maxlength="30"/>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required/>
+            <input type="password" id="password" name="password" class="form-control" required maxlength="32"/>
         </div>
 
 

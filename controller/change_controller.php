@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_SESSION["uid"])){
     if($_GET["option"] === "username"){
         include "view/username.php";

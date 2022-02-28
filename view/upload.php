@@ -3,7 +3,7 @@
 
         <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" id="title" name="title" class="form-control" required/>
+        <input type="text" id="title" name="title" class="form-control" required maxlength="30"/>
         </div>
 
         <div class="form-group">
