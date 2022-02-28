@@ -89,6 +89,22 @@ class User implements JsonSerializable
         }
     }
 
+    function verify_password($uid,$conn,$password){
+        $stmt = $conn->prepare("SELECT * FROM user WHERE uid=? AND password LIKE ?");
+        $stmt->bind_param("is",$uid,$password);
+        if($stmt->execute()){
+            $result = $stmt->get_result()->num_rows;
+            if ($result > 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }else{
+            return false;
+        }
+    }
+
     function set_password($uid,$conn,$newpassword){
         $stmt = $conn->prepare("UPDATE user SET password=? WHERE uid=?");
         $stmt->bind_param("si",$newpassword,$uid);

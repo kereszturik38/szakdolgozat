@@ -2,11 +2,11 @@
 <div class="container">
     <form id="usernameForm">
         <div class="form-group">
-            <label for="password">Enter your old username</label>
+            <label for="olduser">Enter your old username</label>
             <input type="text" id="olduser" name="olduser" class="form-control" required maxlength="30"/>
         </div>
         <div class="form-group">
-            <label for="password">Enter your new username</label>
+            <label for="olduser">Enter your new username</label>
             <input type="text" id="newuser" name="newuser" class="form-control" required maxlength="30"/>
         </div>
 

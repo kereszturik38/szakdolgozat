@@ -6,18 +6,18 @@
 
     if(isset($_POST)){
 
-        $olduser = htmlspecialchars($_POST["olduser"]);
-        $newuser = htmlspecialchars($_POST["newuser"]);
+        $oldemail = htmlspecialchars($_POST["oldemail"]);
+        $newemail = htmlspecialchars($_POST["newemail"]);
         $request_uid = $_POST["uid"];
 
         if($u->filterByUID($request_uid,$conn)){
 
-            if($u->get_username() === $olduser){
-                if($u->set_username($request_uid,$conn,$newuser)){
+            if($u->get_email() === $oldemail){
+                if($u->set_email($request_uid,$conn,$newemail)){
                     echo "success";
                 }
                 }else{
-                    die("Username change failure");
+                    die("Email change failure");
                 }
                 
             }else{

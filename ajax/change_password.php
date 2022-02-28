@@ -6,18 +6,18 @@
 
     if(isset($_POST)){
 
-        $olduser = htmlspecialchars($_POST["olduser"]);
-        $newuser = htmlspecialchars($_POST["newuser"]);
+        $oldpw = md5($_POST["oldpw"]);
+        $newpw = md5($_POST["newpw"]);
         $request_uid = $_POST["uid"];
 
         if($u->filterByUID($request_uid,$conn)){
 
-            if($u->get_username() === $olduser){
-                if($u->set_username($request_uid,$conn,$newuser)){
+            if($u->verify_password($request_uid,$conn,$oldpw)){
+                if($u->set_password($request_uid,$conn,$newpw)){
                     echo "success";
                 }
                 }else{
-                    die("Username change failure");
+                    die("Password change failure");
                 }
                 
             }else{
