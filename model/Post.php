@@ -106,16 +106,44 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_pages($postsPerPage,$conn,$title="%",$type="%",$user="%"){
+    function get_number_of_bookmark_pages($postsPerPage,$conn,$user=null){
+        if($user === null){
+            $user = "%";
+        }
+
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from bookmarks WHERE uid LIKE ?");
+        $stmt->bind_param("is",$postsPerPage,$user);
+        if ($stmt->execute()){
+            $result = $stmt->get_result()->fetch_assoc();
+            $pages = $result["pages"];
+            return $pages;
+        }else{
+            $pages = 1;
+            return $pages;
+        }
+    }
+
+    function get_number_of_pages($postsPerPage,$conn,$title=null,$type=null,$user=null){
+        if($title === null){
+            $title = "%";
+        }
+        if($type === null){
+            $type = "%";
+        }
+        if($user === null){
+            $user = "%";
+        }
+
         $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ?");
         $stmt->bind_param("isss",$postsPerPage,$title,$type,$user);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];
+            return $pages;
         }else{
             $pages = 1;
+            return $pages;
         }
-        return $pages;
     }
 
     function get_popular(int $limit, $conn)

@@ -1,6 +1,7 @@
 <?php
 include "inc/db.php";
 include "inc/fetch_file.php";
+include "inc/update_session.php";
 
 session_start();
 

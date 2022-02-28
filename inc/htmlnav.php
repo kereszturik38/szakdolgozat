@@ -40,7 +40,7 @@
                 </a>
 
 
-                <span class="mx-3"><i class='bi-person-fill em-1'></i><?php echo $_SESSION["username"]; ?></span>
+                <span class="mx-3" id="loggedUser"><i class='bi-person-fill em-1'></i><?php echo $_SESSION["username"]; ?></span>
             <?php } else { ?>
                 <a class='btn btn-secondary' href='index.php?page=login'>Login</a>
             <?php } ?>

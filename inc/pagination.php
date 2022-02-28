@@ -1,5 +1,4 @@
 <?php
-
 $lastPage = $numberOfPages - 1;
 
 if($numberOfPages != 0):

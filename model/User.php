@@ -79,6 +79,36 @@ class User implements JsonSerializable
         }
     }
 
+    function set_username($uid,$conn,$newusername){
+        $stmt = $conn->prepare("UPDATE user SET username=? WHERE uid=?");
+        $stmt->bind_param("si",$newusername,$uid);
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function set_password($uid,$conn,$newpassword){
+        $stmt = $conn->prepare("UPDATE user SET password=? WHERE uid=?");
+        $stmt->bind_param("si",$newpassword,$uid);
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function set_email($uid,$conn,$newemail){
+        $stmt = $conn->prepare("UPDATE user SET email=? WHERE uid=?");
+        $stmt->bind_param("si",$newemail,$uid);
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 
     function get_uid()
