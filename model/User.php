@@ -125,7 +125,18 @@ class User implements JsonSerializable
         }
     }
 
+    function get_post_count($conn){
+        if(!isset($this->uid)) return false;
 
+        $stmt = $conn->prepare("SELECT COUNT(post_id) as postcount FROM post WHERE uid=?");
+        $stmt->bind_param("i",$this->uid);
+        if($stmt->execute()){
+            $result =  $stmt->get_result()->fetch_assoc();
+            return $result["postcount"];
+        }else{
+            return false;
+        }
+    }
 
     function get_uid()
     {
