@@ -60,3 +60,20 @@ a{
     max-width: 450px;
     max-height:800px;
 }
+
+.pfp{
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.user{
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+}
+
+#loggedUser{
+    cursor:pointer;
+}

@@ -13,11 +13,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=search">Search</a>
                     </li>
-                    <?php if (isset($_SESSION["loggedIn"])):  ?>
+                    <?php if (isset($_SESSION["loggedIn"])) :  ?>
+
 
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=settings">Settings</a>
                         </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=logout">Logout</a>
@@ -29,7 +31,7 @@
         </div>
         <div class="d-flex align-items-center mx-sm-auto">
 
-            <?php if (isset($_SESSION["loggedIn"])){ ?>
+            <?php if (isset($_SESSION["loggedIn"])) { ?>
 
                 <a class="btn btn-primary mx-3" href="index.php?page=bookmarks&pageNum=0">
                     Bookmarks <span class="badge badge-light"> <i class="bi-bookmark"></i> </span>
@@ -40,7 +42,17 @@
                 </a>
 
 
-                <span class="mx-3" id="loggedUser"><i class='bi-person-fill em-1'></i><?php echo $_SESSION["username"]; ?></span>
+
+                <div class="d-flex" id="loggedUser">
+                    <div class="justify-content-center align-items-center align-self-center d-none d-lg-block">
+                        <h5 class="user"><?php echo $_SESSION["username"] ?></h5>
+                    </div>
+                    <div class="d-flex">
+                        <img class="pfp" src=<?php echo "pfp/{$_SESSION['uid']}.png" ?> alt="pfp">
+                    </div>
+                </div>
+
+
             <?php } else { ?>
                 <a class='btn btn-secondary' href='index.php?page=login'>Login</a>
             <?php } ?>

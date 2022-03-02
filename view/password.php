@@ -21,8 +21,8 @@
             type: "POST",
             url: "ajax/change_password.php",
             data: {
-                oldpw: $("#oldpw").val(),
-                newpw: $("#newpw").val(),
+                oldpw: $('#oldpw').val(),
+                newpw: $('#newpw').val(),
                 uid: <?php echo $_SESSION["uid"]; ?>
             },
             success: function(e) {
