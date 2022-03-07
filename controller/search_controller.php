@@ -43,7 +43,17 @@ include "inc/searchfield.php";
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$search,"video/%",null);
                     $resultsToShow = $p->filterByType($search,"video/%",$offset, $postsPerPage,$conn);
                     break;
-                case "Uploaded by":
+                case "Private":
+                    if($_SESSION["admin"] === true){
+                        $user = null;
+                    }else{
+                        $user = $_SESSION["uid"];
+                    }
+                    
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$search,null,null,0);
+                    $resultsToShow = $p->filterPrivate($user,$offset,$postsPerPage,$conn);
+                    break;
+                    case "Uploaded by":
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$search,null,null);
                     $resultsToShow = $p->filterByUploader($search,$offset,$postsPerPage,$conn);
                     break;

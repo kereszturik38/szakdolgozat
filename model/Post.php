@@ -106,13 +106,33 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_bookmark_pages($postsPerPage,$conn,$user=null){
+    function filterPrivate(string $user=null,int $offset, int $postsPerPage,$conn)
+    {
+        if($user===null){
+            $user = "%";
+        }
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE visible=0 AND post.uid LIKE ? LIMIT ?,?");
+        $stmt->bind_param("sii",$user,$offset,$postsPerPage);
+
+        if ($stmt->execute()) {
+            $results = $stmt->get_result();
+            return $results;
+        }
+        $stmt->close();
+    }
+
+    function get_number_of_bookmark_pages($postsPerPage,$conn,$user=null,$visible=null){
         if($user === null){
             $user = "%";
         }
+        if($visible === null){
+            $visible = 1; // 1 = true;
+        }else{
+            $visible = 0;
+        }
 
-        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from bookmarks WHERE uid LIKE ?");
-        $stmt->bind_param("is",$postsPerPage,$user);
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from bookmarks WHERE uid LIKE ? AND visible=?");
+        $stmt->bind_param("isi",$postsPerPage,$user,$visible);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];
@@ -123,7 +143,7 @@ class Post implements JsonSerializable
         }
     }
 
-    function get_number_of_pages($postsPerPage,$conn,$title=null,$type=null,$user=null){
+    function get_number_of_pages($postsPerPage,$conn,$title=null,$type=null,$user=null,$visible=null){
         if($title === null){
             $title = "%";
         }
@@ -133,9 +153,14 @@ class Post implements JsonSerializable
         if($user === null){
             $user = "%";
         }
+        if($visible === null){
+            $visible = 1; // 1 = true;
+        }else{
+            $visible = 0;
+        }
 
-        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ?");
-        $stmt->bind_param("isss",$postsPerPage,$title,$type,$user);
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ? AND visible=?");
+        $stmt->bind_param("isssi",$postsPerPage,$title,$type,$user,$visible);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];

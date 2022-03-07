@@ -27,7 +27,11 @@
             <a href="index.php?page=delete&id=<?php echo $row["post_id"]; ?>">
                 <i class="bi-trash link link-danger"></i>
             </a>
+            
             <?php } ?>
+            <?php if($row["visible"] === 0): ?>
+            <a id="visibleButton" class="bi-eye-slash-fill"></a>
+            <?php endif ?>
         </div>
     </div>
 </div>

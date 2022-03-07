@@ -10,6 +10,7 @@
                     <option>Title</option>
                     <option>Image</option>
                     <option>Video</option>
+                    <option>Private</option>
                     <option>Uploaded by</option>
                 </select>
                 <button type="submit" class="btn btn-lg btn-success">

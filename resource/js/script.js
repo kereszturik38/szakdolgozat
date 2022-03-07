@@ -41,4 +41,8 @@ $(document).ready(function() {
     $("#loggedUser").click( () => {
         window.location.href="index.php?page=profile";
     })
+
+    $("#visibleButton").click( () => {
+        
+    })
 });
