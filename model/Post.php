@@ -121,18 +121,14 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_bookmark_pages($postsPerPage,$conn,$user=null,$visible=null){
+    function get_number_of_bookmark_pages($postsPerPage,$conn,$user=null){
         if($user === null){
             $user = "%";
         }
-        if($visible === null){
-            $visible = 1; // 1 = true;
-        }else{
-            $visible = 0;
-        }
+        
 
-        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from bookmarks WHERE uid LIKE ? AND visible=?");
-        $stmt->bind_param("isi",$postsPerPage,$user,$visible);
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from bookmarks WHERE uid LIKE ?");
+        $stmt->bind_param("is",$postsPerPage,$user);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];
@@ -171,9 +167,23 @@ class Post implements JsonSerializable
         }
     }
 
+    function set_visibility($post_id,$visibility,$conn){
+        $stmt = $conn->prepare("UPDATE post SET visible=? WHERE post_id=?");
+        $stmt->bind_param("ii", $visibility,$post_id);
+
+        if ($stmt->execute()) {
+            return true;
+        }else{
+            return false;
+        }
+        $stmt->close();
+    }
+    
+
+
     function get_popular(int $limit, $conn)
     {
-        $stmt = $conn->prepare("SELECT * FROM post ORDER BY bookmark_count DESC LIMIT ?");
+        $stmt = $conn->prepare("SELECT * FROM post WHERE visible=1 ORDER BY bookmark_count DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
 
         if ($stmt->execute()) {

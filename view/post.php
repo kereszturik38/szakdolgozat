@@ -23,8 +23,8 @@
 
                 <div class="d-flex">
                     <?php
-                    if (isset($_SESSION["loggedIn"])) {
-                        if (!$is_bookmarked) { ?>
+                    if (isset($_SESSION["loggedIn"])){
+                        if (!$is_bookmarked){?>
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
                                 <i class="bi-bookmark em-1"></i>
                                 Add to bookmarks
@@ -36,6 +36,13 @@
                             </button>
                     <?php }
                     } ?>
+                
+                    <?php if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true):
+                    if($p->get_visible() === 1){ ?>
+                        <a id="visibleButton" class="bi-eye-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make private</a> 
+                    <?php }else{ ?>
+                        <a id="visibleButton" class="bi-eye-slash-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make public</a>
+                   <?php } endif; ?>
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@
             
             <?php } ?>
             <?php if($row["visible"] === 0): ?>
-            <a id="visibleButton" class="bi-eye-slash-fill"></a>
+            <a id="visibleButton" class="bi-eye-slash-fill" data-pid=<?php echo $row["post_id"]; ?> data-visibility=<?php echo $row["visible"]; ?>></a>
             <?php endif ?>
         </div>
     </div>

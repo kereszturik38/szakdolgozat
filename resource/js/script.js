@@ -42,7 +42,24 @@ $(document).ready(function() {
         window.location.href="index.php?page=profile";
     })
 
-    $("#visibleButton").click( () => {
-        
+    $(document).on("click","#visibleButton", (e) => {
+        let pid = $(e.target).attr("data-pid");
+        let visibility = $(e.target).attr("data-visibility");
+        console.log(pid);
+        console.log(visibility)
+        $.ajax({
+            type: "POST",
+            url: "ajax/set_visibility.php",
+            data: {
+                post_id: $(e.target).attr("data-pid"),
+                visibility: $(e.target).attr("data-visibility")
+            },
+            success: function() {
+                alert("Post visibility changed");
+            },
+            error: function() {
+                alert("An error has occured while trying to change post visibility")
+            }
+        })
     })
 });
