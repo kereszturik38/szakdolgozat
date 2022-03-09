@@ -95,8 +95,12 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
-    function filterByUploader(string $username="%",int $offset, int $postsPerPage,$conn)
+    function filterByUploader(string $username=null,int $offset, int $postsPerPage,$conn)
     {
+        if($username === null){
+            $username = "%";
+        }
+
         $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("sii", $username,$offset,$postsPerPage);
         if ($stmt->execute()) {

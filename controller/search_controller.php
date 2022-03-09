@@ -53,8 +53,8 @@ include "inc/searchfield.php";
                     $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$search,null,null,0);
                     $resultsToShow = $p->filterPrivate($user,$offset,$postsPerPage,$conn);
                     break;
-                    case "Uploaded by":
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,$search,null,null);
+                    case "Uploader":
+                    $numberOfPages = $p->get_number_of_pages($postsPerPage,$conn,null,null);
                     $resultsToShow = $p->filterByUploader($search,$offset,$postsPerPage,$conn);
                     break;
                 

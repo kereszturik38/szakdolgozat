@@ -47,8 +47,12 @@
                     <div class="justify-content-center align-items-center align-self-center d-none d-lg-block">
                         <h5 class="user"><?php echo $_SESSION["username"] ?></h5>
                     </div>
-                    <div class="d-flex">
-                        <img class="pfp" src=<?php echo "pfp/{$_SESSION['uid']}.png" ?> alt="pfp">
+                    <div class="d-flex px-2">
+                        <?php if(file_exists("pfp/{$_SESSION['uid']}.png")){ ?>
+                            <img class="pfp" src=<?php echo "pfp/{$_SESSION['uid']}.png" ?> alt="pfp">
+                        <?php } else { ?>
+                            <img class="pfp" src=<?php echo "pfp/default.png" ?> alt="pfp">
+                        <?php } ?>
                     </div>
                 </div>
 
