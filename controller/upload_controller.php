@@ -10,7 +10,7 @@ if (isset($_POST["submit"])) {
     $file = basename($_FILES["fileToUpload"]["name"]);
     $fileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     $public = isset($_POST["publicCheck"]) ? 1 : 0;
-
+    $description = $_POST["description"];
     
 
     $uploadOK = 1;
@@ -33,7 +33,7 @@ if (isset($_POST["submit"])) {
 
 
     $p = new Post();
-    if ($uploadOK == 1 && $p->upload($_SESSION["uid"], $title, $public, $uploadType, $conn) === 0) {
+    if ($uploadOK == 1 && $p->upload($_SESSION["uid"], $title, $description, $public, $uploadType, $conn) === 0) {
 
         $upload_dir = "posts/" . $p->get_post_id() . "-" . $p->get_post_uid() . "/";
         if (is_dir($upload_dir)) {

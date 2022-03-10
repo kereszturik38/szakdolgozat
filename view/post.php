@@ -2,14 +2,14 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
-                <?php if(preg_match("{image/*}",$p->get_type())) { ?>
+                <?php if (preg_match("{image/*}", $p->get_type())) { ?>
                     <img class="card-img-top mb-5 mb-md-0 enlargePost" src=<?php echo $imgstr ?> alt=<?php echo $p->get_title(); ?> />
-                <?php }else if(preg_match("{video/*}",$p->get_type())){ ?>
+                <?php } else if (preg_match("{video/*}", $p->get_type())) { ?>
                     <video class="card-img-top mb-5 mb-md-0 enlargePost">
                         <source src=<?php echo $imgstr ?> />
                     </video>
                 <?php } ?>
-             </div>
+            </div>
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
@@ -23,8 +23,8 @@
 
                 <div class="d-flex">
                     <?php
-                    if (isset($_SESSION["loggedIn"])){
-                        if (!$is_bookmarked){?>
+                    if (isset($_SESSION["loggedIn"])) {
+                        if (!$is_bookmarked) { ?>
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" id="bookmarkButton">
                                 <i class="bi-bookmark em-1"></i>
                                 Add to bookmarks
@@ -36,15 +36,25 @@
                             </button>
                     <?php }
                     } ?>
-                
-                    <?php if(isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true ) ):
-                    if($p->get_visible() === 1){ ?>
-                        <a id="visibleButton" class="bi-eye-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make private</a> 
-                    <?php }else{ ?>
-                        <a id="visibleButton" class="bi-eye-slash-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make public</a>
-                   <?php } endif; ?>
+
+                    <?php if (isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true)) :
+                        if ($p->get_visible() === 1) { ?>
+                            <a id="visibleButton" class="bi-eye-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make private</a>
+                        <?php } else { ?>
+                            <a id="visibleButton" class="bi-eye-slash-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make public</a>
+                    <?php }
+                    endif; ?>
                 </div>
             </div>
+
+        </div>
+
+        <div class="row-md-6 mt-5 mb-5">
+            <h2>Description</h2>
+            <?php if (isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true)) : ?>
+                <a class="mb-5 bi-pencil-fill" href="index.php?page=change&option=description&id=<?php echo $p->get_post_id(); ?>">Edit</a>
+            <?php endif ?>
+            <p><?php echo $p->get_description(); ?></p>
         </div>
 
         <div class="mt-5">
@@ -151,9 +161,11 @@
             $("#commentError").addClass("d-none");
         });
 
+
+
         $("#commentForm").submit(function(e) {
             e.preventDefault();
-            if($("#usercomment").val().length === 0){
+            if ($("#usercomment").val().length === 0) {
                 $("#commentError").removeClass("d-none");
                 return;
             }
@@ -177,16 +189,16 @@
                 url: action,
                 data: dataArray,
                 dataType: "json",
-                beforeSend: function(){
+                beforeSend: function() {
                     $("#commentForm").trigger('reset');
                 },
                 success: function(array) {
-                    
-                        $("#commentCount").text(array.length);
-                        $("#commentSection").empty();
-                        array.forEach(function(currentObject) {
-                            $("#commentSection").append(
-                                `
+
+                    $("#commentCount").text(array.length);
+                    $("#commentSection").empty();
+                    array.forEach(function(currentObject) {
+                        $("#commentSection").append(
+                            `
                             <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="#">
@@ -196,8 +208,8 @@
                             </div>
                         </div>
 `
-                            );
-                        });
+                        );
+                    });
 
                 },
                 error: function(error) {

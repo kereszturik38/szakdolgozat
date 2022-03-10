@@ -45,14 +45,18 @@ include "inc/searchfield.php";
                     $resultsToShow = $p->filterByType($search, "video/%", $offset, $postsPerPage, $conn);
                     break;
                 case "Private":
-                    if ($_SESSION["admin"] === true) {
-                        $user = null;
+                    if (isset($_SESSION["loggedIn"])) {
+                        if ($_SESSION["admin"] === true) {
+                            $user = null;
+                        } else {
+                            $user = $_SESSION["uid"];
+                        }
+
+                        $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, $search, null, 0, $user, null);
+                        $resultsToShow = $p->filterPrivate($user, $offset, $postsPerPage, $conn);
                     } else {
-                        $user = $_SESSION["uid"];
                     }
 
-                    $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, $search, null, 0, $user, null);
-                    $resultsToShow = $p->filterPrivate($user, $offset, $postsPerPage, $conn);
                     break;
                 case "Uploader":
 
@@ -65,6 +69,7 @@ include "inc/searchfield.php";
                         } catch (Exception $e) {
                             echo "<div class=alert>No such UID was found</div>";
                             include "view/noresults.php";
+                            die();
                         }
                     } else {
                         $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, null, null, 1, null, $search);
@@ -75,7 +80,7 @@ include "inc/searchfield.php";
 
                     break;
             }
-            if ($resultsToShow && $resultsToShow->num_rows > 0) {
+            if (isset($resultsToShow) && $resultsToShow->num_rows > 0) {
 
 
                 while ($row = $resultsToShow->fetch_assoc()) {

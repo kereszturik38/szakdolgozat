@@ -6,6 +6,7 @@ class Post implements JsonSerializable
     private int $post_id;
     private int $post_uid;
     private string $title;
+    private string $description;
     private int $bookmark_count;
     private int $comment_count;
     private string $timestamp;
@@ -30,6 +31,7 @@ class Post implements JsonSerializable
 
                 $this->post_uid = $row["uid"];
                 $this->title = $row["title"];
+                $this->description = $row["description"];
                 $this->bookmark_count = $row["bookmark_count"];
                 $this->comment_count = $row["comment_count"];
                 $this->timestamp = $row["timestamp"];
@@ -42,11 +44,11 @@ class Post implements JsonSerializable
     }
 
 
-    function upload(int $uid, string $title, int $visible, string $type, $conn)
+    function upload(int $uid, string $title, string $description, int $visible, string $type, $conn)
     {
         if($type === "") return;
-        $stmt = $conn->prepare("INSERT INTO post(post.uid,title,visible,type) VALUES (?,?,?,?)");
-        $stmt->bind_param("isis", $uid, $title, $visible, $type);
+        $stmt = $conn->prepare("INSERT INTO post(post.uid,title,description,visible,type) VALUES (?,?,?,?,?)");
+        $stmt->bind_param("issis", $uid, $title, $description, $visible, $type);
 
         if ($stmt->execute()) {
             $this->post_id = $stmt->insert_id;
@@ -75,7 +77,7 @@ class Post implements JsonSerializable
     {
         
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND VISIBLE=1 LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("sii", $title,$offset,$postsPerPage);
 
         if ($stmt->execute()) {
@@ -87,7 +89,7 @@ class Post implements JsonSerializable
 
     function filterByType(string $title, string $type,int $offset, int $postsPerPage,$conn)
     {
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? AND VISIBLE=1 LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("ssii", $title, $type,$offset,$postsPerPage);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
@@ -103,7 +105,7 @@ class Post implements JsonSerializable
             $uid = "%";
         }
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND post.uid LIKE ? AND VISIBLE=1 LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND post.uid LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("ssii",$username,$uid,$offset,$postsPerPage);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
@@ -117,7 +119,7 @@ class Post implements JsonSerializable
         if($user===null){
             $user = "%";
         }
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE visible=0 AND post.uid LIKE ? LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.uid = user.uid WHERE visible=0 AND post.uid LIKE ? LIMIT ?,?");
         $stmt->bind_param("sii",$user,$offset,$postsPerPage);
 
         if ($stmt->execute()) {
@@ -304,6 +306,20 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    function update_description($description,$post_id, $conn)
+    {
+        if($post_id === null) return false;
+
+        $stmt = $conn->prepare("UPDATE post SET description = ? WHERE post_id LIKE ?");
+        $stmt->bind_param("si", $description, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
+
 
     function get_post_id()
     {
@@ -324,6 +340,11 @@ class Post implements JsonSerializable
     function get_title()
     {
         if(isset($this->title)) return $this->title;
+    }
+
+    function get_description()
+    {
+        if(isset($this->description)) return $this->description;
     }
 
     function get_bookmark_count()
