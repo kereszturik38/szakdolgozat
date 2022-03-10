@@ -7,6 +7,8 @@ if(isset($_SESSION["uid"])){
         include "view/password.php";
     }else if($_GET["option"] === "email"){
         include "view/email.php";
+    }else if($_GET["option"] === "pfp"){
+        include "view/pfp.php";
     }else{
         header('location: index.php');
     }

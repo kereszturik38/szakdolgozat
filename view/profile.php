@@ -4,7 +4,7 @@
         <div class="card-body text-center">
             <h5 class="card-title"><?php echo $u->get_username(); ?></h5>
             <p class="card-text">Level : <?php echo $u->get_level(); ?></p>
-            <a href=<?php echo "index.php?page=search&pageNum=0&select=Uploader";?> class="btn btn-success">View <?php echo $postcount; ?> posts</a>
+            <a href=<?php echo "index.php?page=search&pageNum=0&select=Uploader&search=" . $u->get_username();?> class="btn btn-success">View <?php echo $postcount; ?> posts</a>
         </div>
     </div>
 
