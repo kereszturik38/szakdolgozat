@@ -1,11 +1,7 @@
 <?php
 include "model/Post.php";
 
-$UPLOAD_LIMIT_BY_LEVEL = array(
-    "1" => 5000000, // 5mb
-    "2" => 10000000, // 10mb
-    "3" => 20000000 // 20mb
-);
+
 
 if (isset($_POST["submit"])) {
 
@@ -15,10 +11,7 @@ if (isset($_POST["submit"])) {
     $fileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     $public = isset($_POST["publicCheck"]) ? 1 : 0;
 
-    $IMAGE_TYPES = array("png", "jpg", "bmp");
-    $VIDEO_TYPES = array("mp4", "ogg", "mov");
-
-
+    
 
     $uploadOK = 1;
     $errorMsg = "";
