@@ -37,7 +37,7 @@
                     <?php }
                     } ?>
                 
-                    <?php if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true):
+                    <?php if(isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true ) ):
                     if($p->get_visible() === 1){ ?>
                         <a id="visibleButton" class="bi-eye-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make private</a> 
                     <?php }else{ ?>

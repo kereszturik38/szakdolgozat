@@ -92,14 +92,14 @@ class Comment implements JsonSerializable
     }
 
     function get_post_id(){
-        return $this->post_id;
+        if(isset($this->post_id)) return $this->post_id;
     }
 
     function get_text(){
-        return $this->text;
+        if(isset($this->text)) return $this->text;
     }
     function get_time_commented(){
-        return $this->time_commented;
+        if(isset($this->time_commented)) return $this->time_commented;
     }
 
     

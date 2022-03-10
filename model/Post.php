@@ -95,14 +95,16 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
-    function filterByUploader(string $username=null,int $offset, int $postsPerPage,$conn)
+    function filterByUploader(int $offset, int $postsPerPage,$conn,$username=null,$uid = null)
     {
         if($username === null){
             $username = "%";
+        }if($uid === null){
+            $uid = "%";
         }
 
-        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND VISIBLE=1 LIMIT ?,?");
-        $stmt->bind_param("sii", $username,$offset,$postsPerPage);
+        $stmt = $conn->prepare("SELECT post_id,post.uid,username,title,bookmark_count,comment_count,timestamp,visible,type FROM post INNER JOIN user ON post.uid = user.uid WHERE username LIKE ? AND post.uid LIKE ? AND VISIBLE=1 LIMIT ?,?");
+        $stmt->bind_param("ssii",$username,$uid,$offset,$postsPerPage);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
@@ -143,7 +145,7 @@ class Post implements JsonSerializable
         }
     }
 
-    function get_number_of_pages($postsPerPage,$conn,$title=null,$type=null,$user=null,$visible=null){
+    function get_number_of_pages($postsPerPage,$conn,$title=null,$type=null,$visible=null,$user=null,$username=null){
         if($title === null){
             $title = "%";
         }
@@ -155,12 +157,12 @@ class Post implements JsonSerializable
         }
         if($visible === null){
             $visible = 1; // 1 = true;
-        }else{
-            $visible = 0;
+        }if($username === null){
+            $username="%";
         }
 
-        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post WHERE title LIKE ? AND type LIKE ? AND uid LIKE ? AND visible=?");
-        $stmt->bind_param("isssi",$postsPerPage,$title,$type,$user,$visible);
+        $stmt = $conn->prepare("SELECT CEIL(COUNT(post_id)/?) as 'pages' from post INNER JOIN user on post.uid = user.uid WHERE title LIKE ? AND type LIKE ? AND post.uid LIKE ? AND username LIKE ? AND visible=?");
+        $stmt->bind_param("issssi",$postsPerPage,$title,$type,$user,$username,$visible);
         if ($stmt->execute()){
             $result = $stmt->get_result()->fetch_assoc();
             $pages = $result["pages"];
@@ -305,38 +307,44 @@ class Post implements JsonSerializable
 
     function get_post_id()
     {
-        return $this->post_id;
+        if(isset($this->post_id)){
+            return $this->post_id;
+        }
+        
     }
 
     function get_post_uid()
     {
-        return $this->post_uid;
+        if(isset($this->post_uid)){
+            return $this->post_uid;
+        }
+        
     }
 
     function get_title()
     {
-        return $this->title;
+        if(isset($this->title)) return $this->title;
     }
 
     function get_bookmark_count()
     {
-        return $this->bookmark_count;
+        if(isset($this->bookmark_count)) return $this->bookmark_count;
     }
     function get_comment_count()
     {
-        return $this->comment_count;
+        if(isset($this->comment_count)) return $this->comment_count;
     }
     function get_timestamp()
     {
-        return $this->timestamp;
+        if(isset($this->timestamp)) return $this->timestamp;
     }
     function get_visible()
     {
-        return $this->visible;
+        if(isset($this->visible)) return $this->visible;
     }
     function get_type()
     {
-        return $this->type;
+        if(isset($this->type)) return $this->type;
     }
 
     public function jsonSerialize()
