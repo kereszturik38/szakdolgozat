@@ -86,7 +86,7 @@
                     foreach ($comments as $comment) {
                         $u->filterByUID($comment->get_uid(), $conn);
                 ?>
-                        <div class="d-flex bg-gray comment">
+                        <div class="d-flex bg-gray comment" data-cid=<?php echo $comment->get_comment_id() ?>>
                             <div class="d-flex px-2">
                                 <?php if (file_exists("pfp/{$comment->get_uid()}.png")) { ?>
                                     <img class="pfp" src=<?php echo "pfp/{$comment->get_uid()}.png" ?> alt="pfp">
@@ -117,6 +117,11 @@
 
 <script>
     $(document).ready(function() {
+
+
+        let useradmin = <?php echo $_SESSION["admin"] === true ? true : false; ?>;
+        console.log(useradmin);
+
         $("#bookmarkButton").click(function() {
 
             $.ajax({
@@ -206,7 +211,7 @@
                     array.forEach(function(currentObject) {
                         $("#commentSection").append(
                             `
-                            <div class="d-flex bg-gray comment">
+                            <div class="d-flex bg-gray comment" data-cid=${currentObject.comment_id}>
                             <div class="d-flex px-2">
                                     <img class="pfp" src="pfp/${currentObject.uid}.png" alt="pfp" onerror="this.src='pfp/default.png';">
                                 </div>
