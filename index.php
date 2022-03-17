@@ -1,7 +1,7 @@
 <?php
 include "inc/db.php";
 include "inc/fetch_file.php";
-
+include "inc/init_level.php";
 
 session_start();
 

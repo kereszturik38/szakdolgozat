@@ -13,7 +13,7 @@
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
                 <div class="fs-5 mb-5">
-                    <span><a class="link-success text-decoration-none" href="#"><?php echo $u->get_username(); ?></a></span><br>
+                    <span><a class="link-success text-decoration-none" href="index.php?page=profile&id=<?php echo $u->get_uid(); ?>"><?php echo $u->get_username(); ?></a></span><br>
                     <i class=<?php echo $icon; ?>id="bookmarkIcon">
                         <span class="badge badge-secondary bg-dark" id="bookmarkCount">
                             <?php echo $p->get_bookmark_count() ?>
@@ -88,7 +88,7 @@
                 ?>
                         <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
-                                <a class="link link-success" href="#">
+                                <a class="link link-success" href="index.php?page=profile&id=<?php echo $comment->get_uid(); ?>">
                                     <h5><?php echo $u->get_username(); ?> <small class="text-muted"><i>Posted on <?php echo $comment->get_time_commented(); ?></i></small></h5>
                                 </a>
                                 <p><?php echo $comment->get_text();  ?></p>
@@ -201,7 +201,7 @@
                             `
                             <div class="d-flex bg-gray comment">
                             <div class="flex-grow-1 ms-3">
-                                <a class="link link-success" href="#">
+                                <a class="link link-success" href="index.php?page=profile&id=${currentObject.uid}">
                                     <h5>${currentObject.username}<small class="text-muted"><i>Posted on ${currentObject.time_commented}</i></small></h5>
                                 </a>
                                 <p>${currentObject.text}</p>

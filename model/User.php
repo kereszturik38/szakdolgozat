@@ -138,7 +138,6 @@ class User implements JsonSerializable
         }
     }
 
-
     function get_uid()
     {
         if(isset($this->uid)){
