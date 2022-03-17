@@ -87,6 +87,13 @@
                         $u->filterByUID($comment->get_uid(), $conn);
                 ?>
                         <div class="d-flex bg-gray comment">
+                            <div class="d-flex px-2">
+                                <?php if (file_exists("pfp/{$comment->get_uid()}.png")) { ?>
+                                    <img class="pfp" src=<?php echo "pfp/{$comment->get_uid()}.png" ?> alt="pfp">
+                                <?php } else { ?>
+                                    <img class="pfp" src=<?php echo "pfp/default.png" ?> alt="pfp">
+                                <?php } ?>
+                            </div>
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="index.php?page=profile&id=<?php echo $comment->get_uid(); ?>">
                                     <h5><?php echo $u->get_username(); ?> <small class="text-muted"><i>Posted on <?php echo $comment->get_time_commented(); ?></i></small></h5>
@@ -200,6 +207,9 @@
                         $("#commentSection").append(
                             `
                             <div class="d-flex bg-gray comment">
+                            <div class="d-flex px-2">
+                                    <img class="pfp" src="pfp/${currentObject.uid}.png" alt="pfp" onerror="this.src='pfp/default.png';">
+                                </div>
                             <div class="flex-grow-1 ms-3">
                                 <a class="link link-success" href="index.php?page=profile&id=${currentObject.uid}">
                                     <h5>${currentObject.username}<small class="text-muted"><i>Posted on ${currentObject.time_commented}</i></small></h5>

@@ -1,7 +1,12 @@
 <?php
 
 if (isset($_GET["page"])) {
-    include "controller/" . $_GET["page"] . "_controller.php";
+    if(file_exists("controller/" . $_GET["page"] . "_controller.php")){
+        include "controller/" . $_GET["page"] . "_controller.php";
+    }else{
+        include "view/404.php";
+    }
+
 } else{
     include "model/Post.php";
     include "model/User.php";
