@@ -29,7 +29,7 @@ class Comment implements JsonSerializable
 
             foreach($commentArray as $comment){
                 if(!$loopOk){ break; }
-                $stmt = $conn->prepare("DELETE FROM comment WHERE comment_id = $comment");
+                $stmt = $conn->prepare("DELETE FROM comment WHERE comment_id =$comment");
                 $stmt->bind_param("i", $comment);
                 if($stmt->execute()){
                     continue; //success
@@ -37,6 +37,9 @@ class Comment implements JsonSerializable
                     $loopOk = false;
                     break; //fail
                 }
+            }
+            if($loopOk === true){
+                return true;
             }
         } else{
             return false;

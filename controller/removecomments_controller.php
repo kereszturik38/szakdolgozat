@@ -8,16 +8,20 @@ $p = new Post();
 $u = new User();
 $c = new Comment();
 
-if(isset($_GET["pid"])){
+if(isset($_GET["pid"]) && isset($_SESSION["loggedIn"])){
 
 if($p->filterByPID($_GET["pid"],$conn)){
-    $comments = $c->commentsForPID($_GET["pid"],$conn);
+
+    if(($p->get_post_uid() === $_SESSION["uid"]) || $_SESSION["admin"] === true){
+        $comments = $c->commentsForPID($_GET["pid"],$conn);
+        include "view/removecomments.php";
+    }else{
+        include "view/404.php";
+    }
     
 
-    include "view/removecomments.php";
-
 }else{
-    return "view/404.php";
+    include "view/404.php";
 }
 
 

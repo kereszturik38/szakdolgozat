@@ -45,18 +45,21 @@
     $("#removeCommentsButton").click(() => {
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
+        if(checkboxes.length < 1) return;
+
         for (var i = 0; i < checkboxes.length; i++) {
             array.push(checkboxes[i].value)
         }
 
         $.ajax({
             url: "ajax/remove_comments.php",
-            method:POST,
+            method:"POST",
             data:{
                 comments: array
             },
             success: ()=>{
                 alert("Comments successfully deleted.")
+                $("#commentSection").load(location.href + " #commentSection");
             },
             error: ()=>{
                 alert("An error has occurred.")
