@@ -79,8 +79,12 @@
         </div>
         <div class="mt-5">
             <h2>Comments <span class="badge badge-secondary bg-dark" id="commentCount"><?php echo $p->get_comment_count() ?></span></h2>
-
-            <div id="commentSection">
+            <?php
+                if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true):
+            ?>
+            <a class="mt-5 mb-5" href="index.php?page=removecomments&pid=<?php echo $p->get_post_id(); ?>">Remove comments</a>
+            <?php endif; ?>
+            <div id="commentSection" class="mt-2">
                 <?php
                 if ($comments != NULL) {
                     foreach ($comments as $comment) {
