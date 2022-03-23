@@ -17,6 +17,13 @@ if(isset($_SESSION["loggedIn"]) && isset($_SESSION["uid"])){
             $pid = $_GET["id"];
             include "view/description.php";
         }
+    }else if($_GET["option"] === "title" && isset($_GET["id"])){
+        $p = new Post();
+        $p->filterByPID($_GET["id"],$conn);
+        if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true){
+            $pid = $_GET["id"];
+            include "view/title.php";
+        }
     }
     
     else{

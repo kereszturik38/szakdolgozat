@@ -12,6 +12,9 @@
             </div>
             <div class="col-md-6">
                 <h1 class="display-5 fw-bolder"><?php echo $p->get_title() ?></h1>
+                <?php if (isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true)) : ?>
+                    <a class="mb-5 bi-pencil-fill" href="index.php?page=change&option=title&id=<?php echo $p->get_post_id(); ?>">Edit</a>
+                <?php endif ?>
                 <div class="fs-5 mb-5">
                     <span><a class="link-success text-decoration-none" href="index.php?page=profile&id=<?php echo $u->get_uid(); ?>"><?php echo $u->get_username(); ?></a></span><br>
                     <i class=<?php echo $icon; ?>id="bookmarkIcon">
@@ -80,11 +83,12 @@
         <div class="mt-5">
             <h2>Comments <span class="badge badge-secondary bg-dark" id="commentCount"><?php echo $p->get_comment_count() ?></span></h2>
             <?php
-            if(isset($_SESSION["loggedIn"])):
-                if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true):
+            if (isset($_SESSION["loggedIn"])) :
+                if ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true) :
             ?>
-            <a class="mt-5 mb-5" href="index.php?page=removecomments&pid=<?php echo $p->get_post_id(); ?>">Remove comments</a>
-            <?php endif;endif; ?>
+                    <a class="mt-5 mb-5" href="index.php?page=removecomments&pid=<?php echo $p->get_post_id(); ?>">Remove comments</a>
+            <?php endif;
+            endif; ?>
             <div id="commentSection" class="mt-2">
                 <?php
                 if ($comments != NULL) {

@@ -320,6 +320,20 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    function update_title($title,$post_id, $conn)
+    {
+        if($post_id === null) return false;
+
+        $stmt = $conn->prepare("UPDATE post SET title = ? WHERE post_id LIKE ?");
+        $stmt->bind_param("si", $title, $post_id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+        $stmt->close();
+    }
+
 
     function get_post_id()
     {
