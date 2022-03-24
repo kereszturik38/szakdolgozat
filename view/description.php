@@ -3,7 +3,7 @@
     <form id="descriptionForm">
         <div class="form-group">
             <label for="newdesc">Enter new description for post</label>
-            <input type="textarea" id="newdesc" name="newdesc" class="form-control" required maxlength="50" rows="5" cols="50"/>
+            <input type="text" id="newdesc" name="newdesc" class="form-control" required maxlength="50" rows="5" cols="50" placeholder="<?php echo $p->get_description(); ?>"/>
         </div>
         <button class="btn btn-primary mt-5" type="submit" name="submit" value="submit">Change description</button>
     </form>
