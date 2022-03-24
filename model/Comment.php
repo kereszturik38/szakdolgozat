@@ -16,6 +16,8 @@ class Comment implements JsonSerializable
             $stmt->bind_param("i",$post_id);
             if($stmt->execute()){
                 return true;
+            }else{
+                return false;
             }
             $stmt->close();
         }

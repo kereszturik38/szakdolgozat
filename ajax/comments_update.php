@@ -17,7 +17,7 @@ if (isset($_POST)) {
         $uploader_id = $_POST["uid"];
 
         if (strlen($comment_text) > 0) {
-            if ($c->leaveComment($post_id, $uploader_id, $comment_text, $conn)) {
+            if (@$c->leaveComment($post_id, $uploader_id, $comment_text, $conn)) {
                 $comments = $c->commentsForPID($post_id, $conn);
                 if ($comments) {
                     foreach ($comments as &$comment) {

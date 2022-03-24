@@ -128,8 +128,6 @@
     $(document).ready(function() {
 
 
-        let useradmin = <?php echo $_SESSION["admin"] === true ? true : false; ?>;
-        console.log(useradmin);
 
         $("#bookmarkButton").click(function() {
 
