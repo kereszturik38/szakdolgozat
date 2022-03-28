@@ -26,6 +26,8 @@ class Post implements JsonSerializable
         $stmt->bind_param("i", $post_id);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
+            if($results->num_rows == 0) return false;
+
             while ($row = $results->fetch_assoc()) {
                 $this->post_id = $post_id;
 

@@ -12,18 +12,26 @@ if(isset($_SESSION["loggedIn"]) && isset($_SESSION["uid"])){
         include "view/pfp.php";
     }else if($_GET["option"] === "description" && isset($_GET["id"])){
         $p = new Post();
-        $p->filterByPID($_GET["id"],$conn);
-        if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true){
-            $pid = $_GET["id"];
-            include "view/description.php";
+        if($p->filterByPID($_GET["id"],$conn)){
+            if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true){
+                $pid = $_GET["id"];
+                include "view/description.php";
+            }
+        }else{
+            include "view/404.php";
         }
+        
     }else if($_GET["option"] === "title" && isset($_GET["id"])){
         $p = new Post();
-        $p->filterByPID($_GET["id"],$conn);
-        if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true){
-            $pid = $_GET["id"];
-            include "view/title.php";
+        if($p->filterByPID($_GET["id"],$conn)){
+            if($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true){
+                $pid = $_GET["id"];
+                include "view/title.php";
+            }
+        }else{
+            include "view/404.php";
         }
+        
     }
     
     else{
