@@ -13,6 +13,7 @@ class User implements JsonSerializable
         $stmt->bind_param("i", $uid);
         if ($stmt->execute()) {
             $results = $stmt->get_result();
+            if($results->num_rows == 0) return false;
             while ($row = $results->fetch_assoc()) {
                 $this->uid = $uid;
                 
