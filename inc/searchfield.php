@@ -7,6 +7,7 @@
 
                 <input type="text" class="form-control-lg form-control" name="search" placeholder="Search...">
                 <select class="form-select-md form-select" name="select">
+                    <option selected="true" disabled="disabled">Select filter</option>
                     <option>Title</option>
                     <option>Image</option>
                     <option>Video</option>
