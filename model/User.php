@@ -27,7 +27,7 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
-    function register($username, $email, $password, $conn)
+    static function register($username, $email, $password, $conn)
     {
         $stmt = $conn->prepare("INSERT INTO user (username,email,password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
@@ -65,7 +65,7 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
-    function is_admin(int $uid,$conn){
+    static function is_admin(int $uid,$conn){
         $stmt = $conn->prepare("SELECT uid FROM admin WHERE uid=?");
         $stmt->bind_param("i", $uid);
         if($stmt->execute()){
@@ -80,7 +80,7 @@ class User implements JsonSerializable
         }
     }
 
-    function set_username($uid,$conn,$newusername){
+    static function set_username($uid,$conn,$newusername){
         $stmt = $conn->prepare("UPDATE user SET username=? WHERE uid=?");
         $stmt->bind_param("si",$newusername,$uid);
         if($stmt->execute()){
@@ -90,7 +90,7 @@ class User implements JsonSerializable
         }
     }
 
-    function verify_password($uid,$conn,$password){
+    static function verify_password($uid,$conn,$password){
         $stmt = $conn->prepare("SELECT * FROM user WHERE uid=? AND password LIKE ?");
         $stmt->bind_param("is",$uid,$password);
         if($stmt->execute()){
@@ -106,7 +106,7 @@ class User implements JsonSerializable
         }
     }
 
-    function set_password($uid,$conn,$newpassword){
+    static function set_password($uid,$conn,$newpassword){
         $stmt = $conn->prepare("UPDATE user SET password=? WHERE uid=?");
         $stmt->bind_param("si",$newpassword,$uid);
         if($stmt->execute()){
@@ -116,7 +116,7 @@ class User implements JsonSerializable
         }
     }
 
-    function set_email($uid,$conn,$newemail){
+   static  function set_email($uid,$conn,$newemail){
         $stmt = $conn->prepare("UPDATE user SET email=? WHERE uid=?");
         $stmt->bind_param("si",$newemail,$uid);
         if($stmt->execute()){

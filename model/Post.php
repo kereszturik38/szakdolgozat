@@ -64,7 +64,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function delete(int $post_id, $conn)
+    static function delete(int $post_id, $conn)
     {
         $stmt = $conn->prepare("DELETE FROM post WHERE post_id = ?");
         $stmt->bind_param("i", $post_id);
@@ -77,7 +77,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByTitle(string $title, int $offset, int $postsPerPage, $conn)
+    static function filterByTitle(string $title, int $offset, int $postsPerPage, $conn)
     {
 
 
@@ -91,7 +91,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterByType(string $title, string $type, int $offset, int $postsPerPage, $conn)
+    static function filterByType(string $title, string $type, int $offset, int $postsPerPage, $conn)
     {
         $stmt = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.uid = user.uid WHERE title LIKE ? AND type LIKE ? AND VISIBLE=1 LIMIT ?,?");
         $stmt->bind_param("ssii", $title, $type, $offset, $postsPerPage);
@@ -101,7 +101,7 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
-    function filterByUploader(int $offset, int $postsPerPage, $conn, $username = null, $uid = null)
+    static function filterByUploader(int $offset, int $postsPerPage, $conn, $username = null, $uid = null)
     {
         if ($username === null) {
             $username = "%";
@@ -119,7 +119,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function filterPrivate(string $user = null, int $offset, int $postsPerPage, $conn)
+    static function filterPrivate(string $user = null, int $offset, int $postsPerPage, $conn)
     {
         if ($user === null) {
             $user = "%";
@@ -134,7 +134,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function get_number_of_bookmark_pages($postsPerPage, $conn, $user = null)
+    static function get_number_of_bookmark_pages($postsPerPage, $conn, $user = null)
     {
         if ($user === null) {
             $user = "%";
@@ -153,7 +153,7 @@ class Post implements JsonSerializable
         }
     }
 
-    function get_number_of_pages($postsPerPage, $conn, $title = null, $type = null, $visible = null, $user = null, $username = null)
+    static function get_number_of_pages($postsPerPage, $conn, $title = null, $type = null, $visible = null, $user = null, $username = null)
     {
         if ($title === null) {
             $title = "%";
@@ -183,7 +183,7 @@ class Post implements JsonSerializable
         }
     }
 
-    function set_visibility($post_id, $visibility, $conn)
+    static function set_visibility($post_id, $visibility, $conn)
     {
         $stmt = $conn->prepare("UPDATE post SET visible=? WHERE post_id=?");
         $stmt->bind_param("ii", $visibility, $post_id);
@@ -198,7 +198,7 @@ class Post implements JsonSerializable
 
 
 
-    function get_popular(int $limit, $conn)
+   static function get_popular(int $limit, $conn)
     {
         $stmt = $conn->prepare("SELECT * FROM post WHERE visible=1 ORDER BY bookmark_count DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
@@ -274,7 +274,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function is_bookmarked(int $uid, int $post_id, $conn)
+    static function is_bookmarked(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("SELECT * FROM bookmarks WHERE uid =? AND post_id=?");
         $stmt->bind_param("ii", $uid, $post_id);
@@ -291,7 +291,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function bookmark(int $uid, int $post_id, $conn)
+   static function bookmark(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("INSERT INTO bookmarks (uid,post_id) VALUES (?,?)");
         $stmt->bind_param("ii", $uid, $post_id);
@@ -303,7 +303,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function remove_bookmark(int $uid, int $post_id, $conn)
+    static function remove_bookmark(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("DELETE FROM bookmarks WHERE uid=? AND post_id=?");
         $stmt->bind_param("ii", $uid, $post_id);
@@ -315,7 +315,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function update_description($description, $post_id, $conn)
+    static function update_description($description, $post_id, $conn)
     {
         if ($post_id === null) return false;
 
@@ -329,7 +329,7 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
-    function update_title($title, $post_id, $conn)
+    static function update_title($title, $post_id, $conn)
     {
         if ($post_id === null) return false;
 

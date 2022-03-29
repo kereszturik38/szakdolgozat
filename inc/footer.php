@@ -2,7 +2,7 @@
 <footer class="mt-auto py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">
-            <i class="bi-github">kereszturik38</i>
+            <a href="https://github.com/kereszturik38/szakdolgozat" class="bi-github">kereszturik38</a>
         </p>
     </div>
 </footer>

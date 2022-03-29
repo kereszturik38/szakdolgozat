@@ -8,7 +8,7 @@ class Comment implements JsonSerializable
     private string $text;
     private string $time_commented;
 
-    function leaveComment($post_id,$uid,$text,$conn){
+    static function leaveComment($post_id,$uid,$text,$conn){
         $stmt = $conn->prepare("INSERT INTO comment (uid,post_id,text) VALUES (?,?,?)");
         $stmt->bind_param("iis", $uid,$post_id,$text);
         if ($stmt->execute()) {
@@ -24,7 +24,7 @@ class Comment implements JsonSerializable
         $stmt->close();
     }
 
-    function remove_comments($commentArray,$conn){
+    static function remove_comments($commentArray,$conn){
         if(sizeof($commentArray) != 0){
 
             $loopOk = true;
