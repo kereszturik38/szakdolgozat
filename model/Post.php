@@ -215,7 +215,7 @@ class Post implements JsonSerializable
 
         $bookmarks = array();
 
-        $stmt = $conn->prepare("SELECT post_id FROM bookmarks WHERE uid = ? LIMIT ?,?");
+        $stmt = $conn->prepare("SELECT post_id FROM bookmarks WHERE uid = ?LIMIT ?,?");
         $stmt->bind_param("iii", $uid, $offset, $postsPerPage);
 
         if ($stmt->execute()) {

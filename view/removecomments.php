@@ -1,6 +1,7 @@
 <div class="container">
     <div class="sticky-top">
         <button class="btn btn-danger mt-5 mb-5" id="removeCommentsButton">Remove Comments</button>
+        <input type="checkbox" id="checkAllBtn" onClick="toggle(this)">Select all</input>
     </div>
 
     <div id="commentSection" class="mt-2">
@@ -24,7 +25,7 @@
                         <p><?php echo $comment->get_text();  ?></p>
                     </div>
                     <div class="flex-grow-1">
-                        <input type="checkbox" id=<?php echo $comment->get_comment_id(); ?> name=<?php echo $comment->get_comment_id(); ?> value=<?php echo $comment->get_comment_id(); ?>>
+                        <input type="checkbox" id=<?php echo $comment->get_comment_id(); ?> name="commentCheckbox" value=<?php echo $comment->get_comment_id(); ?>>
                     </div>
                 </div>
 
@@ -40,12 +41,20 @@
 </div>
 
 <script>
+    function toggle(source) {
+        checkboxes = document.getElementsByName('commentCheckbox');
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+
     var array = []
 
     $("#removeCommentsButton").click(() => {
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-        if(checkboxes.length < 1) return;
+        if (checkboxes.length < 1) return;
 
         for (var i = 0; i < checkboxes.length; i++) {
             array.push(checkboxes[i].value)
@@ -53,15 +62,15 @@
 
         $.ajax({
             url: "ajax/remove_comments.php",
-            method:"POST",
-            data:{
+            method: "POST",
+            data: {
                 comments: array
             },
-            success: ()=>{
+            success: () => {
                 alert("Comments successfully deleted.")
                 $("#commentSection").load(location.href + " #commentSection");
             },
-            error: ()=>{
+            error: () => {
                 alert("An error has occurred.")
             }
         })
