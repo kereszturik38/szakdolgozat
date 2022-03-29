@@ -2,11 +2,11 @@
 <div class="container">
     <form id="emailForm">
         <div class="form-group">
-            <label for="oldemail">Enter your old email address</label>
+            <label for="oldemail">Enter your old email address*</label>
             <input type="email" id="oldemail" name="oldemail" class="form-control" required maxlength="30"/>
         </div>
         <div class="form-group">
-            <label for="newemail">Enter your new email address</label>
+            <label for="newemail">Enter your new email address*</label>
             <input type="email" id="newemail" name="newemail" class="form-control" required maxlength="30"/>
         </div>
 

@@ -2,12 +2,12 @@
     <form action="?page=upload" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-        <label for="title">Title</label>
+        <label for="title">Title*</label>
         <input type="text" id="title" name="title" class="form-control" required maxlength="30"/>
         </div>
 
         <div class="form-group">
-        <label for="fileToUpload">File</label>
+        <label for="fileToUpload">File*</label>
         <input type="file" name="fileToUpload" id="fileToUpload" class="form-control" required/>
         <small>Note: your file upload limit is <?php echo $UPLOAD_LIMIT_BY_LEVEL[$_SESSION["level"]]/1000000 . " mb"; ?></small>
         </div>

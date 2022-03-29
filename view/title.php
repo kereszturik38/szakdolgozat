@@ -2,7 +2,7 @@
 <div class="container">
     <form id="titleForm">
         <div class="form-group">
-            <label for="newtitle">Enter new title for post</label>
+            <label for="newtitle">Enter new title for post*</label>
             <input type="text" id="newtitle" name="newtitle" class="form-control" required maxlength="30" rows="5" cols="50" placeholder="<?php echo $p->get_title();?>"/>
         </div>
         <button class="btn btn-primary mt-5" type="submit" name="submit" value="submit">Change title</button>

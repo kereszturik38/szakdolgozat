@@ -4,7 +4,7 @@
     <media src=<?php echo fetch_file($p); ?> class="w-50" />
     <form id="deleteForm">
         <div class="form-group">
-            <label for="password">Enter your password to confirm deletion</label>
+            <label for="password">Enter your password to confirm deletion*</label>
             <input type="password" id="password" name="password" class="form-control" required maxlength="32"/>
         </div>
 
