@@ -38,19 +38,19 @@ include "inc/searchfield.php";
                 $offset = $pageNum * $postsPerPage;
 
                 switch ($select) {
-                    case "Title":
+                    case "title":
                         $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, $search, null, 1, null, null);
                         $resultsToShow = $p->filterByTitle($search, $offset, $postsPerPage, $conn);
                         break;
-                    case "Image":
+                    case "image":
                         $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, $search, "image/%", 1, null, null);
                         $resultsToShow = $p->filterByType($search, "image/%", $offset, $postsPerPage, $conn);
                         break;
-                    case "Video":
+                    case "video":
                         $numberOfPages = $p->get_number_of_pages($postsPerPage, $conn, $search, "video/%", 1, null, null);
                         $resultsToShow = $p->filterByType($search, "video/%", $offset, $postsPerPage, $conn);
                         break;
-                    case "Private":
+                    case "private":
                         if (isset($_SESSION["loggedIn"])) {
                             if ($_SESSION["admin"] === true) {
                                 $user = null;
@@ -64,7 +64,7 @@ include "inc/searchfield.php";
                         }
 
                         break;
-                    case "Uploader":
+                    case "uploader":
 
                         if (preg_match("/uid:/", $searchRaw)) {
                             $s_uid = preg_split("/:/", $searchRaw);

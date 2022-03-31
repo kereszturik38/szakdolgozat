@@ -6,15 +6,15 @@
             <div class="text-center text-white input-group">
 
                 <input type="text" class="form-control-lg form-control" name="search" placeholder="Search...">
-                <select class="form-select-md form-select" name="select">
-                    <option selected="true" disabled="disabled">Select filter</option>
-                    <option>Title</option>
-                    <option>Image</option>
-                    <option>Video</option>
-                    <option>Private</option>
-                    <option>Uploader</option>
+                <select class="form-select-md form-select" name="select" id="selectDropdown">
+                    <option selected="true" value="default" name="default">Select filter</option>
+                    <option value="title" name="title">Title</option>
+                    <option value="image" name="image">Image</option>
+                    <option value="video" name="video">Video</option>
+                    <option value="private" name="private">Private</option>
+                    <option value="uploader" name="uploader">Uploader</option>
                 </select>
-                <button type="submit" class="btn btn-lg btn-success">
+                <button type="submit" class="btn btn-lg btn-success" id="searchBtn">
                 <i class=" bi-search em-1"></i>
                 </button>
 
@@ -22,5 +22,24 @@
         </form>
     </div>
 </header>
+
+<script>
+    $(document).ready(() => {
+        $("#searchBtn").attr("disabled",true);
+
+        $("#selectDropdown").on('change',() =>{
+            
+            let selected = $("#selectDropdown").val();
+            if(selected==="default"){
+                $("#searchBtn").attr("disabled",true);
+            }else{
+                $("#searchBtn").attr("disabled",false);
+            }
+        })
+    })
+    
+
+
+</script>
 
 <div class="d-grid gap-3">

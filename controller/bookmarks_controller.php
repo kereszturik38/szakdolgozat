@@ -36,5 +36,5 @@ if (isset($_SESSION["loggedIn"]) && isset($_SESSION["uid"])) {
         include "inc/bookmarks_pagination.php";
     }
 } else {
-    header('location: index.php');
+    header('location: index.php?page=login');
 }
