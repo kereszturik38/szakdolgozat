@@ -35,11 +35,11 @@ if(isset($_SESSION["loggedIn"]) && isset($_SESSION["uid"])){
     }
     
     else{
-        header('location: index.php');
+        header('location: index.php?page=login');
     }
     
 }else{
-    header('location: index.php');
+    header('location: index.php?page=login');
 }
 
 

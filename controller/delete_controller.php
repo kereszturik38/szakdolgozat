@@ -21,7 +21,7 @@
             echo "<h3 class='alert alert-danger'>Database error</h3>";
         }
     }else{
-        echo "<h3 class='alert alert-danger'>You must be logged in to delete posts</h3>";
+        header('location: index.php?page=login');
     }
 
 ?>

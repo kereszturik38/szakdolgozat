@@ -12,7 +12,7 @@
                 <button class="btn btn-primary" id="makeAdminButton">Make admin</button>
             <?php endif;} ?>
             <p class="card-text">Level : <?php echo $u->get_level(); ?></p>
-            <a href=<?php echo "index.php?page=search&pageNum=0&select=Uploader&search=" . $u->get_username(); ?> class="btn btn-success">View <?php echo $postcount; ?> posts</a>
+            <a href=<?php echo "index.php?page=search&pageNum=0&select=uploader&search=" . $u->get_username(); ?> class="btn btn-success">View <?php echo $postcount; ?> posts</a>
         </div>
     </div>
 
