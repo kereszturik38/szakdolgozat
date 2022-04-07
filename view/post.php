@@ -42,9 +42,9 @@
 
                     <?php if (isset($_SESSION["loggedIn"]) && ($p->get_post_uid() === $_SESSION["uid"] || $_SESSION["admin"] === true)) :
                         if ($p->get_visible() === 1) { ?>
-                            <a id="visibleButton" class="bi-eye-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make private</a>
+                            <a class="bi-eye-fill btn btn-primary visibleButton" data-pid="<?php echo $p->get_post_id(); ?>" data-visibility="<?php echo $p->get_visible(); ?>">Make private</a>
                         <?php } else { ?>
-                            <a id="visibleButton" class="bi-eye-slash-fill btn btn-primary" data-pid=<?php echo $p->get_post_id(); ?> data-visibility=<?php echo $p->get_visible(); ?>>Make public</a>
+                            <a class="bi-eye-slash-fill btn btn-primary visibleButton" data-pid="<?php echo $p->get_post_id(); ?>" data-visibility="<?php echo $p->get_visible(); ?>">Make public</a>
                     <?php }
                     endif; ?>
                 </div>
@@ -70,7 +70,7 @@
                         <label for="usercomment">
                             <h5>Leave a comment</h5>
                         </label>
-                        <textarea class="form-control" rows="3" id="usercomment" name="usercomment"></textarea>
+                        <textarea class="form-control" rows="3" id="usercomment" name="usercomment" maxlength="50"></textarea>
                         <button class="btn btn-success mt-3" name="submit" id="submit" value="submit">Leave comment</button>
                     </div>
 

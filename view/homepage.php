@@ -8,7 +8,7 @@
             ?>
                 <div class="carousel-item <?php if ($key === 0) echo 'active'; ?>">
                 <?php if(preg_match("{image/*}",$img->get_type())){ ?>
-                    <img class="d-block w-100 result" src=<?php echo fetch_file($img) ?> alt=<?php echo $img->get_title(); ?> data-postid=<?php echo $img->get_post_id(); ?>>
+                    <img class="d-block w-100 result" src="<?php echo fetch_file($img) ?>" alt="<?php echo $img->get_title(); ?>" data-postid="<?php echo $img->get_post_id(); ?>">
                 <?php } else if(preg_match("{video/*}",$img->get_type())) { ?>
                     <video class="d-block w-100 result" data-postid=<?php echo $img->get_post_id(); ?>>
                         <source src=<?php echo fetch_file($img); ?> />

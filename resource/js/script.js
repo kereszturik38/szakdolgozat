@@ -21,7 +21,7 @@ $(document).ready(function() {
         window.location.href = "index.php?page=post&id=" + src;
     });
 
-    $(document).on("click","#shareBtn",(e)=>{
+    $(document).on("click",".shareBtn",(e)=>{
         let data = $(e.target).attr("data-clipboard-text");
         if(navigator.clipboard){
             navigator.clipboard.writeText(data);
@@ -42,7 +42,7 @@ $(document).ready(function() {
         window.location.href="index.php?page=profile";
     })
 
-    $(document).on("click","#visibleButton", (e) => {
+    $(document).on("click",".visibleButton", (e) => {
         let pid = $(e.target).attr("data-pid");
         let visibility = $(e.target).attr("data-visibility");
         console.log(pid);

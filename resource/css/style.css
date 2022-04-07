@@ -52,7 +52,7 @@ a{
     text-decoration: none;
 }
 
-#shareBtn{
+.shareBtn{
     cursor:pointer;
 }
 

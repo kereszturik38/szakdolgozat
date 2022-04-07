@@ -1,8 +1,11 @@
 <?php
 
+// JSON válaszra átalakítás miatt szükséges a JsonSerializable
 
 class Post implements JsonSerializable
 {
+
+
     private int $post_id;
     private int $post_uid;
     private string $title;
@@ -15,7 +18,9 @@ class Post implements JsonSerializable
 
 
 
-
+    //Felvesszük az adott poszt adatait az IDja alapján
+    //A függvény hívásakor frissítjük a comment és bookmark számát,ha esetleg az utolsó lekérdezés óta valaki törölt kommentet,stb...
+    //Output:   true (az object felveszi a poszt adatait) vagy false
 
     function filterByPID($post_id, $conn)
     {
@@ -47,6 +52,8 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    //Beszúr új posztot az adatbázisba,majd felveszi a poszt értékeit
+    //Output: 0 (sikeres),1 (sikertelen)
 
     function upload(int $uid, string $title, string $description, int $visible, string $type, $conn)
     {
@@ -64,6 +71,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    //Töröl posztot az adatbázisból
+    //Output: 0 (sikeres), 1 (sikertelen)
+
     static function delete(int $post_id, $conn)
     {
         $stmt = $conn->prepare("DELETE FROM post WHERE post_id = ?");
@@ -77,6 +87,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    //Cím alapján keresés
+    //Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
+
     static function filterByTitle(string $title, int $offset, int $postsPerPage, $conn)
     {
 
@@ -87,9 +100,13 @@ class Post implements JsonSerializable
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
+        }else{
+            return false;
         }
         $stmt->close();
     }
+    // File típus (image,video) alapján keresés
+    // Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
 
     static function filterByType(string $title, string $type, int $offset, int $postsPerPage, $conn)
     {
@@ -98,9 +115,15 @@ class Post implements JsonSerializable
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
+        }else{
+            return false;
         }
         $stmt->close();
     }
+
+    // Olyan posztok keresése,amit az adott felhasználó töltött fel.A felhasználót felhasználónév vagy konkrét UID alapján is kereshetünk.
+    // Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
+
     static function filterByUploader(int $offset, int $postsPerPage, $conn, $username = null, $uid = null)
     {
         if ($username === null) {
@@ -115,9 +138,14 @@ class Post implements JsonSerializable
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
+        }else{
+            return false;
         }
         $stmt->close();
     }
+
+    // Egy adott felhasználó ,vagy az összes felhasználó privát posztjait adja eredményül
+     // Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
 
     static function filterPrivate(string $user = null, int $offset, int $postsPerPage, $conn)
     {
@@ -130,6 +158,8 @@ class Post implements JsonSerializable
         if ($stmt->execute()) {
             $results = $stmt->get_result();
             return $results;
+        }else{
+            return false;
         }
         $stmt->close();
     }
