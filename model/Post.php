@@ -145,7 +145,7 @@ class Post implements JsonSerializable
     }
 
     // Egy adott felhasználó ,vagy az összes felhasználó privát posztjait adja eredményül
-     // Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
+    // Output: $results tömb,ami a keresett posztokat tartalmazza (SQL result sorok) vagy false
 
     static function filterPrivate(string $user = null, int $offset, int $postsPerPage, $conn)
     {
@@ -163,6 +163,11 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
+
+    //Használat: bookmarks_controller.php
+    // Segédfunkció: Egy adott felhasználó könyvjelzői lekérésekor az oldalak számát adja vissza
+    // Output: az oldalak száma vagy 1
+
 
     static function get_number_of_bookmark_pages($postsPerPage, $conn, $user = null)
     {
@@ -182,6 +187,10 @@ class Post implements JsonSerializable
             return $pages;
         }
     }
+
+    //Használat: search_controller.php
+    // Segédfunkció: Egy adott keresés lekérésekor az oldalak számát adja vissza
+    // Output: az oldalak száma vagy 1
 
     static function get_number_of_pages($postsPerPage, $conn, $title = null, $type = null, $visible = null, $user = null, $username = null)
     {
@@ -213,6 +222,9 @@ class Post implements JsonSerializable
         }
     }
 
+    //Az adott poszt láthatóságát változtatja
+    //Output: true vagy false
+
     static function set_visibility($post_id, $visibility, $conn)
     {
         $stmt = $conn->prepare("UPDATE post SET visible=? WHERE post_id=?");
@@ -227,6 +239,11 @@ class Post implements JsonSerializable
     }
 
 
+    //  Használat: index_controller.php
+    //  A főoldalon a $limit számú legnépszerűbb posztot jelenítjük meg egy CSS carousel-ben.
+    //  A népszerűséget a könyvjelzők száma határozza meg.
+    //  Output: $results tömb,ami a posztokat tartalmazza
+
 
    static function get_popular(int $limit, $conn)
     {
@@ -239,6 +256,10 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
+
+    // Használat: bookmarks_controller.php
+    // Az adott felhasználó könyvjelzőit adja vissza
+    // Output: $bookmarks tömb ami a posztokat tartalmazza (0 könyvjelző esetén üres)
 
     function get_bookmarks(int $uid, int $offset, int $postsPerPage, $conn)
     {
@@ -259,6 +280,10 @@ class Post implements JsonSerializable
         return $bookmarks;
         $stmt->close();
     }
+
+    // Használat: filter függvények
+    // Az adott poszt könyvjelző számát számolja ki a függvény hívásakor
+    // Output: true vagy false
 
     function update_bookmarks(int $post_id, $conn)
     {
@@ -282,6 +307,10 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    // Használat: filter függvények
+    // Az adott poszt komment számát számolja ki a függvény hívásakor
+    // Output: true vagy false
+
     function update_comments(int $post_id, $conn)
     {
         $stmt = $conn->prepare("UPDATE post SET comment_count =(SELECT COUNT(post_id) FROM comment WHERE post_id=?) WHERE post_id=?");
@@ -304,6 +333,10 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    // Használat: post_controller.php
+    // Megadja hogy az adott posztot a felhasználó már megjelölte-e könyvjelzőként
+    // Output: true vagy false
+
     static function is_bookmarked(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("SELECT * FROM bookmarks WHERE uid =? AND post_id=?");
@@ -321,6 +354,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    // Megjelöl egy posztot könyvjelzőként
+    // Output: true vagy false
+
    static function bookmark(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("INSERT INTO bookmarks (uid,post_id) VALUES (?,?)");
@@ -333,6 +369,9 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    // Kivesz egy posztot az adott felhasználó könyvjelzői közül
+    // Output: true vagy false
+
     static function remove_bookmark(int $uid, int $post_id, $conn)
     {
         $stmt = $conn->prepare("DELETE FROM bookmarks WHERE uid=? AND post_id=?");
@@ -344,6 +383,10 @@ class Post implements JsonSerializable
         }
         $stmt->close();
     }
+
+    // Használat: ajax/change_description.php
+    // A poszt leírását változtatja
+    // Output: true vagy false
 
     static function update_description($description, $post_id, $conn)
     {
@@ -359,6 +402,10 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+    // Használat: ajax/change_title.php
+    // A poszt címét változtatja
+    // Output: true vagy false
+
     static function update_title($title, $post_id, $conn)
     {
         if ($post_id === null) return false;
@@ -373,6 +420,8 @@ class Post implements JsonSerializable
         $stmt->close();
     }
 
+
+    // Getterek
 
     function get_post_id()
     {
@@ -418,6 +467,8 @@ class Post implements JsonSerializable
     {
         if (isset($this->type)) return $this->type;
     }
+
+    // A JSON válaszokhoz szükséges serialize függvény
 
     public function jsonSerialize()
     {
