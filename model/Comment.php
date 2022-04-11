@@ -1,4 +1,7 @@
 <?php
+
+// JSON válaszra átalakítás miatt szükséges a JsonSerializable
+
 class Comment implements JsonSerializable
 {
     private int $comment_id;
@@ -7,6 +10,10 @@ class Comment implements JsonSerializable
     private int $post_id;
     private string $text;
     private string $time_commented;
+
+    // Komment beszúrása a kommentek táblába
+    // Output: true vagy false
+
 
     static function leaveComment($post_id,$uid,$text,$conn){
         $stmt = $conn->prepare("INSERT INTO comment (uid,post_id,text) VALUES (?,?,?)");
@@ -23,6 +30,9 @@ class Comment implements JsonSerializable
         }
         $stmt->close();
     }
+
+    // Kommentek törlése az adatbázisból
+    // Output: true vagy false
 
     static function remove_comments($commentArray,$conn){
         if(sizeof($commentArray) != 0){
@@ -48,6 +58,9 @@ class Comment implements JsonSerializable
         }
     }
 
+    // Adott felhasználó és poszt alapján szűrés kommentekre
+    // Output: true vagy false
+
     function commentsForPIDAndUID($post_id, $uid,$conn)
     {
         $stmt = $conn->prepare("SELECT * FROM comment WHERE post_id LIKE ? AND uid LIKE ?");
@@ -61,9 +74,15 @@ class Comment implements JsonSerializable
                 $this->text = $row["text"];
                 $this->time_commented = $row["time_commented"];
             }
+            return true;
+        }else{
+            return false;
         }
         $stmt->close();
     }
+
+    // Adott posztra vonatkozó kommentek lekérése
+    // Output: Kommentek tömb (üres vagy kommenteket tartalmazó)
 
     function commentsForPID($post_id,$conn)
     {
@@ -86,6 +105,8 @@ class Comment implements JsonSerializable
         return $allComments;
         $stmt->close();
     }
+
+    // Getterek
 
     function get_comment_id(){
         return $this->comment_id;
@@ -114,14 +135,11 @@ class Comment implements JsonSerializable
         if(isset($this->time_commented)) return $this->time_commented;
     }
 
-    
+    // A JSON válaszokhoz szükséges serialize függvény
+
     public function jsonSerialize()
     {
         return get_object_vars($this);
     }
 
 }
-
-
-
-?>

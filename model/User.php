@@ -1,11 +1,17 @@
 <?php
 
+// JSON válaszra átalakítás miatt szükséges a JsonSerializable
+
 class User implements JsonSerializable
 {
     private int $uid;
     private string $username;
     private string $email;
     private int $level;
+
+    
+    //Felvesszük az adott felhasználó adatait az IDja alapján
+    //Output:   true (az object felveszi a felhasználó adatait) vagy false
 
     function filterByUID($uid, $conn)
     {
@@ -27,6 +33,10 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
+    // Használat: register_controller.php
+    // Beszúr egy új felhasználót az adatbázisba
+    // Output: true vagy false
+
     static function register($username, $email, $password, $conn)
     {
         $stmt = $conn->prepare("INSERT INTO user (username,email,password) VALUES (?, ?, ?)");
@@ -39,6 +49,10 @@ class User implements JsonSerializable
         }
         $stmt->close();
     }
+
+    // Használat: login_controller.php
+    // Login függvény,beléptet egy adott felhasználót
+    // Output: 1 (hibás adat), 0 (sikeres belépés) vagy 2 (adatbázis hiba)
 
     function verify($username, $email,$password, $conn)
     {
@@ -65,6 +79,10 @@ class User implements JsonSerializable
         $stmt->close();
     }
 
+    // Segédfüggvény,lekérdezi hogy az adott user ID szerepel-e az adminok táblában
+    // Használata: az összes admin tevékenység 
+    // Output: true vagy false
+
     static function is_admin(int $uid,$conn){
         $stmt = $conn->prepare("SELECT uid FROM admin WHERE uid=?");
         $stmt->bind_param("i", $uid);
@@ -80,6 +98,10 @@ class User implements JsonSerializable
         }
     }
 
+    // Használat: ajax/change_username.php
+    // A felhasználónév változtatása 
+    // Output: true vagy false
+
     static function set_username($uid,$conn,$newusername){
         $stmt = $conn->prepare("UPDATE user SET username=? WHERE uid=?");
         $stmt->bind_param("si",$newusername,$uid);
@@ -89,6 +111,10 @@ class User implements JsonSerializable
             return false;
         }
     }
+
+    // Használat: ajax/change_password.php
+    // Az adott felhasználó jelszavának egyeztetése egy input jelszóval
+    // Output: true vagy false
 
     static function verify_password($uid,$conn,$password){
         $stmt = $conn->prepare("SELECT * FROM user WHERE uid=? AND password LIKE ?");
@@ -106,6 +132,10 @@ class User implements JsonSerializable
         }
     }
 
+    // Használat: ajax/change_password.php
+    // A jelszó változtatása 
+    // Output: true vagy false
+
     static function set_password($uid,$conn,$newpassword){
         $stmt = $conn->prepare("UPDATE user SET password=? WHERE uid=?");
         $stmt->bind_param("si",$newpassword,$uid);
@@ -116,6 +146,10 @@ class User implements JsonSerializable
         }
     }
 
+    // Használat: ajax/change_email.php
+    // Az email változtatása 
+    // Output: true vagy false
+
    static  function set_email($uid,$conn,$newemail){
         $stmt = $conn->prepare("UPDATE user SET email=? WHERE uid=?");
         $stmt->bind_param("si",$newemail,$uid);
@@ -125,6 +159,10 @@ class User implements JsonSerializable
             return false;
         }
     }
+
+    // Használat: profile_controller.php
+    // Segédfüggvény,az adott felhasználó poszt számát kérdezi le
+    // Output: a felhasználó poszt száma vagy false
 
     function get_post_count($conn){
         if(!isset($this->uid)) return false;
@@ -138,6 +176,9 @@ class User implements JsonSerializable
             return false;
         }
     }
+
+
+    // Getterek
 
     function get_uid()
     {
@@ -160,6 +201,8 @@ class User implements JsonSerializable
     {
         if(isset($this->level)) return $this->level;
     }
+
+    // A JSON válaszokhoz szükséges serialize függvény
 
     public function jsonSerialize()
     {
